@@ -1,0 +1,35 @@
+.sidebar
+
+  .sb-box.clearfix
+    = link_to "Print this list", formatted_user_grocery_lists_path(@user, :print), :target => "_blank", :class => "print-button"
+    - unless @grocery_list.primary?(@user)
+      = link_to "Delete this list", user_grocery_list_path(@user, @grocery_list), :method => :delete, :confirm => "Are you sure?", :id => "delete-grocery-list"
+    - else
+      .left{:style => "margin-left:15px;padding-top:4px"} Primary grocery list
+  = partial "/users/grocery_lists/sidebar"
+
+.main
+
+  .editable.clearfix{:style => "position: relative;"}
+
+    .edit-icon{:title => "Edit name", :onclick => "$('grocery-list-name').hide();$('edit-name-form').show(); $('grocery-name').focus(); $('grocery-name').select();"}
+
+    %h1#grocery-list-name.name{:onclick => "$(this).hide();$(this).next().show(); $('grocery-name').focus(); $('grocery-name').select();"}
+      = @grocery_list.name || "Untitled list ##{@grocery_list.id}"
+
+    #edit-name-form.edit-box{hidden}
+      - form_remote_tag :url => user_grocery_list_path(@user, @grocery_list), :method => :put, :success => "$('grocery-list-name').show(); $('edit-name-form').hide(); $('grocery-list-name').update($F('grocery-name'))" do
+        = text_field_tag "grocery_list[name]", @grocery_list.name || "Untitled list ##{@grocery_list.id}", :class => "text", :id => "grocery-name"
+        = image_submit_tag "set-icon.png", :class => "img-submit"
+        = link_to_function image_tag("clear-icon.png", :alt => "Clear"), "$('grocery-list-name').show(); $('edit-name-form').hide()", :title => "Clear"
+
+  .catalog_search
+    %label Add to this grocery list
+    = live_search({:dom_id => "live_search", :url => search_user_grocery_list_ingredients_path(@user, @grocery_list).to_json, :prompted => ""})
+    %p 
+      %span.right== Or, #{link_to "Browse all ingredients", ingredients_path}
+      %strong Example:
+      Apples, Carrots, Buckwheat Flour.
+  .catalog-search-shadow
+  
+  = partial "/users/grocery_lists/list"

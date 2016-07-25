@@ -1,0 +1,40 @@
+!!!
+%html
+  %head
+    %title It's Ripe! - Recipes you can make with the ingredients you've got.
+    %meta{'http-equiv' => "Content-Type", 'content' => 'text/html; charset=utf-8'}
+    %link{:rel=>"shortcut icon", :type=>"image/x-icon", :href=>"/favicon.png"}
+    = yield :meta
+    = javascript_include_tag 'prototype'
+    = javascript_include_tag 'effects'
+    = javascript_include_tag 'application'
+    = yield :js_include
+    %link{:href=>"http://s3.amazonaws.com/getsatisfaction.com/feedback/feedback.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}
+    = stylesheet_link_tag 'global'
+    = stylesheet_link_tag 'home'
+    = yield :css_link
+
+    %style{:type=>"text/css",:media=>"all"}= yield :css
+
+    %script{:type => "text/javascript"}
+      = yield :js
+      - unless flash[:notice].blank?
+        :plain
+          document.observe("dom:loaded", function() {
+            new Effect.Appear('flash_notice', {duration: 0.6});      
+            new Effect.Fade('flash_notice', {delay: 3});
+          });
+      - unless @no_trackback
+        set_trackback();
+      
+  %body
+    #overlay{hidden}= partial 'layouts/common/facebox'
+    = iphone_option
+    #page
+      #wrapper
+        #container.clearfix
+          = yield
+    = partial 'layouts/google_analytics'
+    = partial 'layouts/gsfn_feedback'
+    = partial 'layouts/common/footer'
+    

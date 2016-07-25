@@ -1,0 +1,31 @@
+<%- @ingredients = @recipe.recipe_ingredients.find(:all, :include => :ingredient) -%>
+<%- @steps = Step.find_all_by_recipe_id(@recipe.id) -%>
+<p>Hi,</p>
+
+<p><%= @sender_email %> shared a recipe with you.</p>
+
+<p><%= @message %></p>
+
+<p><%= @recipe.name %></p>
+
+<p><strong>INGREDIENTS</strong></p>
+<% @ingredients.each do |recipe_ingredient| %>
+  <% i = recipe_ingredient.ingredient %>
+  <% measurement = recipe_ingredient.measurement || "" %>
+  <% quantity = recipe_ingredient.entered_quantity || "" %>
+  <%= "#{quantity} #{measurement} #{i.name}" %>
+  <br />
+<% end %>
+    
+<p><strong>DIRECTIONS</strong></p>
+<% @steps.each do |step| %>
+  <p><%= step.description %></p>
+<% end %>
+
+<p>What can you make?<br />
+http://itsripe.com/
+</p>
+<p>
+Ted Grubb<br />
+Executive Chef<br />
+ted@itsripe.com</p>

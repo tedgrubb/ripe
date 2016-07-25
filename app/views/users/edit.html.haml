@@ -1,0 +1,52 @@
+.main
+  %h1 Your account
+
+  - @user.password = @user.password_confirmation = nil
+  = error_messages_for :user
+
+  - form_for @user, :html => {:multipart => true} do |f|
+    .row.clearfix
+      %label{:for =>"user_login"} Username
+      = f.text_field :login
+
+    .row.clearfix
+      %label{:for => "user_email"} Email
+      = f.text_field :email
+
+    .row.clearfix
+      %label{:for => "user_location"} Location
+      = f.text_field :location
+  
+    .row.clearfix
+      %label{:for => "user_uploaded_data"} Photo
+      = image_tag @user.photo_path(:small), :style => "float: left; margin-right: 20px"
+      %div{:style => "float: left"}
+        = f.file_field :uploaded_data, :size => "20", :style => "float: none"
+        %small{:style => "display:block;color: #666;margin-top:5px"} GIF, JPEG, or PNG files. 2 MB or smaller. 
+
+    .row.clearfix
+      %label{:for => "user_password"} Password
+      = f.password_field :password
+
+    .row.clearfix
+      %label{:for => "user_password_confirmation"} Confirm Password
+      = f.password_field :password_confirmation
+
+    .clearfix= submit_tag 'Save Changes'
+
+
+- content_for :css do
+  :plain
+    label {
+      float: left;
+      width: 200px;
+    }
+    .row {
+      margin-bottom: 10px;
+      padding-bottom: 15px;
+      padding-left: 5px;
+      border-bottom: 1px solid #EEE;
+    }
+    input {
+      float: left;
+    }

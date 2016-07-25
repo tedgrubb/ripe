@@ -1,0 +1,82 @@
+body {
+  background-color: #FFF;
+}
+.logo {
+  margin-bottom: 20px;
+}
+#user-bar-action {
+  padding-top: 10px;
+  font-size: 1.2em;
+}
+#user-bar-action .divider {
+  padding: 0 5px;
+}
+#tagline {
+  margin-bottom: 2em;
+  margin-left: 25px;
+}
+#screens {
+  margin-left: 25px;
+}
+#screens li {
+  margin-bottom: 3em;
+  padding-top: 2.5em;
+  border-top: 16px dotted #CCC;
+  padding-right: 10px;
+}
+#screens li h2 {
+  text-align: center;
+  font-size: 1.3em;
+  color: #666;
+  margin-bottom: 2em;
+}
+.main {
+  width: 600px;
+  float: left;
+}
+.sidebar {
+  width: 28%;
+  float: right;
+}
+#container {
+  padding-top:50px;
+  width: 900px;
+}
+.main h1 {
+  font-size: 22px;
+  color: #2f312d;
+  font-weight: bold;
+  letter-spacing: -1px;
+}
+.main p {
+  color: #71736f;
+  font-size: 16px;
+  line-height: 1.5em;
+}
+
+#iphone_screen {
+  width: 261px;
+  height: 565px;
+  position: absolute;
+}
+#iphone_screen .screen {
+  width: 261px;
+  height: 565px;
+  position: absolute;
+  background: transparent url(/images/iphone/iphone.png) no-repeat;    
+}
+#iphone_screen .app {
+  width: 215px;
+  height: 277px;
+  top: 93px;
+  left: 24px;
+  overflow: hidden;
+  position: absolute;
+  z-index: 5;
+}
+#iphone_screen .images {
+  width: 430px;
+}
+#iphone_screen .app * {
+  float: left;
+}

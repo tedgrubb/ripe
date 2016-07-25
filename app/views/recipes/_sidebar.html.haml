@@ -1,0 +1,48 @@
+.sidebar
+  %h2 View Options
+  .pod
+    %dl#categories
+      %dt Categories
+      %dd
+        %select{:onchange => "update_category(this)"}
+          %option{:value => ""} All Categories
+          = category_filter(@category, "Appetizer")
+          = category_filter(@category, "Drink")
+          = category_filter(@category, "Breakfast")
+          = category_filter(@category, "Baked Good")
+          = category_filter(@category, "Dessert")
+          = category_filter(@category, "Main Course")
+          = category_filter(@category, "Side Dish")
+          = category_filter(@category, "Soup")
+          = category_filter(@category, "Salad")
+    %br
+    %dl#categories
+      %dt Cuisines
+      %dd
+        %select{:name=>"recipe[new_cuisine]", :onchange => "update_cuisine(this)"}
+          %option{:value => "/recipes"} All Cuisines
+          - @cuisine_id = @cuisine ? @cuisine.id : nil 
+          - Cuisine.find(:all, :order => "name").each do |c|
+            = cuisine_filter(@cuisine_id, c)
+
+  =partial "recipes/ads/adsense_300x250"
+:javascript
+  update_category = function(form_el) {
+    var category = $F(form_el)
+    if(category != "") {
+      query = "?category="+category;
+    } else {
+      query = "";
+    }
+    document.location.href = query
+  }
+
+  update_cuisine = function(form_el) {
+    var cuisine = $F(form_el)
+    if(cuisine != "") {
+      query = cuisine;
+    } else {
+      query = "";
+    }
+    document.location.href = query
+  }

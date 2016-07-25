@@ -1,0 +1,50 @@
+%h1== Super! <span>Do you have any of these ingredients?</span>
+.main
+  .catalog{:style => "margin-bottom: 30px"}
+    = render :partial => 'ingredient', :collection => @ingredients
+
+
+  = link_to "Take me to my dashboard", "/", :class => "large-blue-button", :style => "float:left;margin-right:20px"
+  = link_to "Show me more ingredients", ingredients_path, :class => "large-blue-button", :style => "float:left"
+
+- content_for :css do
+  :plain
+    .add-pantry, .no-link {
+      display:block;
+      font-size: 1.5em;
+      padding: 4px 10px;
+      display:block;
+      float: left;
+      text-decoration:none;
+      text-align: center
+    }
+    .add-pantry {
+      color: #FFF;
+      font-weight: bold;
+      width: 50px;
+      border: 2px solid #3b8a18;
+      background-color: #adcd94;
+      margin-right: 5px;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+    }
+    .add-pantry:hover {
+      background-color: #3b8a18;
+    }
+    .no-link {
+      width: 50px;
+      color: #FFF;
+      font-weight: bold;
+      border: 2px solid #8a1818;
+      background-color: #cd9b94;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+    }
+    .no-link:hover {
+      background-color: #8a1818;
+    }
+    .catalog .cell .actions div {
+      border: none
+    }

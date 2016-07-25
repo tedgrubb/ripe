@@ -1,0 +1,43 @@
+<div id="user-form">
+  <p style="float:right;color:#666;padding-top:7px">Or, <%= link_to "Log in", new_session_path %></p>
+  <h1>Create an account</h1>
+
+  <%= error_messages_for :user, :header_message => "<strong>Oopsy!</strong> There was a little problem.", :message => "Please correct the following:" %>
+
+  <% form_for :user, :url => users_path, :html => {:multipart => true} do |f| -%>
+
+    <div class="row">
+      <label for="login">Username</label><br />
+      <%= f.text_field :login %>
+    </div>
+
+    <div class="row">
+      <label for="email">Email</label><br />
+      <%= f.text_field :email %>
+    </div>
+  
+    <div class="row">
+      <label for="email">Location</label><br />
+      <%= f.text_field :location %>
+    </div>
+
+    <div class="row">
+      <%= image_tag "user-icon.png", :style => "width: 45px;border:1px solid #eee; margin-right:10px;float:left;padding: 1px" %>
+      <label for="user_uploaded_data" style="padding-bottom: 6px;padding-top:2px;display:block">Change your photo</label>
+      <%= f.file_field :uploaded_data, :size => "9" %>
+    </div>
+  
+    <div class="row">
+      <label for="password">Password</label><br />
+      <%= f.password_field :password %>
+    </div>
+
+    <div class="row">
+      <label for="password_confirmation">Confirm Password</label><br />
+      <%= f.password_field :password_confirmation %>
+    </div>
+
+    <%= submit_tag 'Sign up' %>
+
+  <% end -%>
+</div>

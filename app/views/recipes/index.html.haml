@@ -1,0 +1,14 @@
+=partial "sidebar"
+=partial "list"
+
+-content_for :meta do
+  = auto_discovery_link_tag(:rss, formatted_recipes_path(:rss))
+  
+-content_for :css do
+  :plain
+    .main {
+      width: 580px;
+    }
+    .sidebar {
+      width: 300px;
+    }

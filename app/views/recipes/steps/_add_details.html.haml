@@ -1,0 +1,66 @@
+%fieldset#basics_fs.clearfix
+  .balloon
+    %h2 TIP:
+    Be descriptive. It will help people find your recipe. 
+  %h2 ADD DETAILS
+  .inset
+    .row.required
+      = f.label :name, 'Recipe name'
+      = f.text_field :name
+    .row
+      = f.label :description, "Description"
+      = f.text_area :description, :rows => 5, :cols => 50
+    .row{:style => "float: left; margin-right: 25px"}
+      = f.label :category, "Category"
+      %select{:name=>"recipe[category]", :style=>"font-size: 1em"}
+        %option{:value=>""} Select one
+        = category_option(@recipe, "Appetizer")
+        = category_option(@recipe, "Drink")
+        = category_option(@recipe, "Breakfast")
+        = category_option(@recipe, "Baked Good")
+        = category_option(@recipe, "Dessert")
+        = category_option(@recipe, "Main Course")
+        = category_option(@recipe, "Side Dish")
+        = category_option(@recipe, "Soup")
+        = category_option(@recipe, "Salad")
+    .row{:style=>"float: left; margin-right: 25px"}
+      = f.label :cuisine, "Cuisine"
+      %select{:name=>"recipe[new_cuisine]", :style=>"font-size: 1em"}
+        %option{:value => ""} Select one...
+        - Cuisine.find(:all, :order => :name).each do |c|
+          - if @recipe.cuisine && @recipe.cuisine.id == c.id
+            %option{:value => c.id, :selected => "selected"}= c.name
+          -else
+            %option{:value => c.id}= c.name
+    .row{:style=>"float: left; margin-right: 25px"}
+      = f.label :servings, "Servings"
+      = f.text_field :servings, :size => 10
+    .row{:style=>"float: left;"}
+      = f.label :time, "Time"
+      = f.text_field :time, :size => 15
+%fieldset  
+  .balloon
+    %h2 TIP:
+    Adding a photo will get your recipe featured on the home page.
+  %h2 RECIPE PHOTO
+  .inset
+    .row.clearfix
+      - if @recipe.photo
+        %div{:style=>"float: left;margin-right:15px"}= image_tag @recipe.photo_path(:medium)
+      -else
+      = f.file_field :uploaded_data, :size => "30", :style => "font-size: 1.2em"
+    .row.clearfix
+      %h2 Or use a flickr photo instead
+      %div{:style => "float:left;width: 200px"}
+        =f.label :flickr_photo
+        =f.text_field :flickr_photo, :value => "#{@recipe.flickr_photo if @recipe.flickr_photo}"
+        %br
+        =f.label :flickr_photo_link
+        =f.text_field :flickr_photo_link, :value => "#{@recipe.flickr_photo_link if @recipe.flickr_photo_link}"
+        %br
+        =link_to_function "Remove flickr photo", "$('recipe_flickr_photo').value = ''; $('recipe_flickr_photo_link').value = ''"
+      - unless @recipe.new_record?
+        #flickr_photos{:style => "float:right"}
+          #div{:style => "width: 200px;background-color: #FFF; text-align: center; padding: 10px; margin-right: 200px;font-size: 1.1em"}== #{image_tag "/images/spinner.gif"} Loading flickr photos
+        :javascript
+          new Ajax.Request(#{flickr_photos_recipe_path(@recipe).to_json});

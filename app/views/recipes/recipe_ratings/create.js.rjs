@@ -1,0 +1,1 @@
+page[dom_id(@recipe, 'rating')].replace render(:partial => "recipes/recipe_ratings/show", :locals => {:recipe => @recipe})

@@ -1,0 +1,7 @@
+- unless @ingredients.empty?
+  #ingredient_list
+    .inner
+      - @ingredients.each_with_index do |i, index|
+        - skip if i.nil?
+        = partial "recipe_ingredient", :recipe_ingredient => i, :index => index
+    

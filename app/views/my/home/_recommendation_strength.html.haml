@@ -1,0 +1,21 @@
+#recommendation-strength
+  %h3 Your recommendation strength
+  #recommend_meter
+    - if @user.recommendation_score <= 0
+      .low
+    - elsif @user.recommendation_score <= 40
+      .medium-low
+    - elsif @user.recommendation_score <= 80
+      .medium-high
+    - elsif @user.recommendation_score <= 100
+      .high
+  - unless @user.recommendation_score == 100
+    .recommendation-help
+      %h4 Get better recommendations
+      %ol
+        - if @user.cuisines.empty?
+          %li= link_to "Choose your favorite cuisines", user_setup_path(@user)
+        - if @user.pantry.ingredients.count < 20
+          %li= link_to "Add more ingredients", ingredients_path
+        %li= link_to "Add your kitchen tools", kitchen_tools_path
+        %li= link_to "Add some favorite recipes", recipes_path  

@@ -1,0 +1,4 @@
+- unless cookies[:theme]
+  - icons = ["avocado", "plum", "pomegranate", "kiwi", "strawberry"]
+  - theme = icons[rand(icons.length)]
+  - cookies[:theme] = {:value => theme, :expires => 1.minute.from_now}

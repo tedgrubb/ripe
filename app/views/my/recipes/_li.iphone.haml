@@ -1,0 +1,7 @@
+- recipe ||= li
+%li.clearfix
+  = image_tag recipe.photo_path(:medium), :class => "photo"
+  .c
+    %p.recipe_title= recipe.name
+    %p.created_at== #{time_ago_in_words recipe.created_at} ago.
+    = display_rating(recipe)

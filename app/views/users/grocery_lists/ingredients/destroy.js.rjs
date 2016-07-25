@@ -1,0 +1,1 @@
+page[@ingredient].visual_effect :fade

@@ -1,0 +1,13 @@
+<% 
+  ingredients = @ingredients.sort{|l,r| l.categories.last.name <=> r.categories.last.name} 
+  category_name = nil
+%>
+<dl class="list" title="Your Pantry" selected="true">
+  <% ingredients.each do |ingredient| %>
+    <% if ingredient.categories.last.name != category_name %><dt><%= ingredient.categories.last.name %></dt><% end %>
+    <dd class="ingredient cell clearfix">
+      <%= link_to ingredient.name, "" %>
+    </dd>
+    <% category_name = ingredient.categories.last.name %>
+  <% end %>
+</dl>

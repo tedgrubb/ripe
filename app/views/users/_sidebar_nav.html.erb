@@ -1,0 +1,12 @@
+<%- if current_user == @user -%>
+<div class="home_pod">
+  <%= partial 'invites/form' unless @user.invites == 0 || @user.invites == nil %>
+</div>
+<%- else -%>
+<div class="clearfix" style="margin-bottom: 30px;background-color:#DDD; padding: 8px;">
+  <%= image_tag @user.photo_path(:medium), :style => "float: left; border: 2px solid #FFF; margin-right: 10px" %>
+  <p><strong><%= @user.name %></strong></p>
+  <p><%= @user.location %></p>
+</div>
+<%= partial "layouts/common/ads/free_shipping_side" %>
+<%- end -%>

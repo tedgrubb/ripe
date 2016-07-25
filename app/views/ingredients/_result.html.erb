@@ -1,0 +1,4 @@
+<% result ||= result %>
+<li>
+  <%= link_to_remote result.name, :url => "/ingredients/insert?id=#{result.id}" %>
+</li>

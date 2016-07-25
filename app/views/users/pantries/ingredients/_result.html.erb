@@ -1,0 +1,7 @@
+<% result ||= result %>
+<li class="result">
+  <%= link_to_remote result.name, 
+        :url => insert_user_pantry_ingredients_path(current_user), 
+        :with => "'id='+#{result.id}",
+        :method => 'get' %>
+</li>

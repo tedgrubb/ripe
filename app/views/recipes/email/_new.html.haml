@@ -1,0 +1,16 @@
+- form_remote_tag :url => recipe_email_path(@recipe), :method => "get" do
+  %h2 Email this recipe
+  .row
+    = label_tag :sender_email, "Email from"
+    %br/
+    = text_field_tag :sender_email
+  .row
+    = label_tag :email, "Email to"
+    %br/
+    = text_field_tag :email
+  .row
+    = label_tag :message, "Optional message"
+    %br/
+    = text_area_tag :message
+  .row
+    = submit_tag "Send email"

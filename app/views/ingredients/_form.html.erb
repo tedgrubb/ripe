@@ -1,0 +1,33 @@
+<% fields_for ingredient do |f| %>
+<div class="row">
+  <label for="ingredient_name">Name</label><br />
+  <%= f.text_field :name %>
+</div>
+
+<div class="row">
+  <label for="ingredient_uploaded_data">Photo</label><br />
+  <%= f.file_field :uploaded_data, :size => "20" %>
+</div>
+
+<div class="row">
+  <label>Categories (Add at least 1 please)</label><br />
+<table style="width:500px">
+<%- @categories.in_groups_of(2) do |group| -%>
+  <tr>
+  <%- group.each do |category| -%>
+  <%- next if category == nil -%>
+  <td>
+    <input type="checkbox" <%= "checked=\"checked\"" if ingredient.categories.any? {|c| c.id == category.id} %> id="<%= dom_id(category) %>" name="ingredient[new_categories][]" value="<%= category.id %>" />
+    <label for="<%= dom_id(category) %>"><%= category.name %></label>
+  </td>
+  <%- end -%>
+  </tr>
+<%- end -%>
+</table>
+</div>
+
+<div class="row">
+  <label for="ingredient_description">Description</label><br />
+  <%= f.text_area :description, :rows => "6" %>
+</div>
+<%- end -%>

@@ -1,0 +1,5 @@
+if @favorite_recipe
+  page << "alert('Added to favorites!')"
+else
+  page << "alert('This is already a favorite!')"  
+end

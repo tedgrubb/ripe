@@ -1,0 +1,74 @@
+#recipe-action-bar.clearfix
+  = partial "/recipes/share_links"
+  %ul.actions
+    %li.first= ingredometer_for(@recipe)
+    - if current_user && current_user.can_make?(@recipe)
+      %li= link_to_function "Make this recipe", :class => "make-recipe"
+    - elsif current_user
+      %li= grocery_list_link
+    - unless @recipe.favorite?(current_user)
+      %li= link_to_remote "Add to favorites", :url => recipe_favorites_path(@recipe.id), :method => :post, :html => {:class => "add-favorites"}
+  =# pluralize(@recipe.views.to_i, "View")
+
+= unpublished_notification unless @recipe.published
+
+.recipe.hrecipe.clearfix
+  #recipe_overview.clearfix
+    #recipe-head.clearfix  
+      =# image_tag "http://www.livingathome.de/test/recipe/hRecipe.png", :style => "float:right;clear:right;", :alt => "hRecipe"
+      - if @recipe.has_any_photo?
+        #recipe-photo
+          - if @recipe.has_flickr_photo?
+            =image_tag "flickr_favicon.png", :style => "position: absolute; top: 5px;right: 5px"
+            = link_to image_tag(@recipe.flickr_photo, :class => "photo", :alt => "#{@recipe.name}"), @recipe.flickr_photo_link
+          -else
+            = image_tag @recipe.photo_path(:full_medium), :class => "photo", :alt => "#{@recipe.name}"
+
+      %h1.recipe-title
+        = @recipe.name
+      = display_rating(@recipe)
+      - unless @recipe.description.blank?
+        .recipe-summary
+          = markdown(@recipe.description)
+          = creator_info
+          
+      = partial "/recipes/meta"
+        
+
+    .sidebar
+      .sb-box
+        %h2 Ingredients
+        = partial "recipe_ingredients"
+      - if @related_recipes.any?
+        .sb-box
+          %h2 Related recipes
+          %ul#related_recipes
+            - @related_recipes.each do |r|
+              %li.clearfix
+                = image_tag r.photo_path(:small)
+                = link_to r.name, r
+    .main
+      .steps.clearfix
+        #advertisement{:style => "float: right;padding: 0 0 5px 15px"}
+          =partial "recipes/ads/amazon_kitchen"
+        %h2 Directions
+        %ol.method
+          -@recipe.steps.each_with_index do |step, i|
+            %li
+              .step-number= i+1
+              .step-inset
+                = step.description.split('.').map {|sentence| "<span>#{sentence}</span>"}.join('. ')
+                - if step.photo
+                  %p= image_tag step.photo_path(:full_medium)
+      -unless @recipe.recipe_comments.blank?
+        %h2 Comments
+      %ul#comments
+        =render(:partial => "recipes/recipe_comments/comment", :collection => @recipe.recipe_comments) unless @recipe.recipe_comments.blank?
+      =partial "/recipes/recipe_comments/form"
+          
+
+-content_for :meta do
+  =recipe_meta_description(@recipe, @recipe.steps, @ingredients)
+
+- content_for :css_link do
+  = stylesheet_link_tag 'recipes'

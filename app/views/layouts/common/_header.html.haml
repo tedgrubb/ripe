@@ -1,0 +1,9 @@
+= partial "/layouts/common/cookie_logo"
+- theme = "avocado"
+#header.clearfix{:class => theme}
+  #header_inset.clearfix
+    #flash_notice{hidden}= flash[:notice]
+    = link_to "It's Ripe", "/", :id => "logo"
+    #header-cloud{:title => "Recipes you can make with the ingredients you've got!"}
+    = partial 'users/user_bar'
+  = partial "/layouts/common/navigation"

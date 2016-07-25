@@ -1,0 +1,44 @@
+.sidebar
+  #iphone_screen
+    .app
+      #iphone_images.images
+        =image_tag "iphone/groceries_screen.png"
+        =image_tag "iphone/pantry_screen.png"
+    .screen
+.main
+  #user-bar-action{right}
+    = link_to "Log in",  login_path,  { :title => "Log in" }
+    %span.divider= "|"
+    = link_to "Sign up", signup_path, :style => "font-weight:bold"
+
+  .right{:style => "clear:right;padding-top:10px"}== Or, #{link_to "check out some recipes", recipes_path}
+    
+  = image_tag "logo_large.png", :class => "logo"
+  #tagline
+    %h1 Recipes you can make with the ingredient you've got.
+    %p 
+      Stop wasting and start learning how to better use the ingredients you’ve got. Keep track of your groceries on the web and on the your mobile phone.<br />Let us know what kind of food you like to eat and we’ll do the rest. 
+
+  %ol#screens
+    %li.clearfix
+      %h2 1. Create grocery lists.
+      = image_tag "web_screen_groceries.jpg"
+    %li.clearfix
+      %h2 2. Keep track of ingredients in your pantry.
+      = image_tag "web_screen_pantry.jpg"
+    %li.clearfix
+      %h2 3. Find recipes you can make with your ingredients.
+      = image_tag "web_screen_recipe.jpg"
+    %li.clearfix
+      %h2== 4. Enjoy. #{link_to "Get a beta invite today!", new_invite_request_path}
+
+- content_for :js do
+  :plain
+    coords = [0, -215]
+    var i = 0
+    document.observe("dom:loaded", function() {
+      iphone_swap = setInterval(function() {
+        i = i == 0 ? 1 : 0;
+        new Effect.Move($('iphone_images'), { x: coords[i], y: 0, mode: 'absolute', duration: 0.7, transition: Effect.Transitions.sinoidal});
+      }, 6000);
+    });

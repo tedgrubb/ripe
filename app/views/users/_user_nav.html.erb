@@ -1,0 +1,7 @@
+<div class="content-head clearfix">
+  <ul class="tabs">
+    <%= sub_nav_link_to "Your Pantry", user_path(@user), :pantry %>
+    <%= sub_nav_link_to "Grocery List", user_grocery_lists_path(@user), :grocery_list %>
+    <%= sub_nav_link_to "Your Recipes", user_recipes_path(@user), :recipes %>
+  </ul>
+</div>

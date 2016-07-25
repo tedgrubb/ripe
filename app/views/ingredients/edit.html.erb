@@ -1,0 +1,13 @@
+<h1>Editing ingredient</h1>
+
+<%= error_messages_for :ingredient %>
+
+<% form_for(@ingredient, :html => {:multipart => true }) do |f| %>
+  <%= render :partial => "form", :locals => {:ingredient => @ingredient} %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @ingredient %> |
+<%= link_to 'Back', ingredients_path %>

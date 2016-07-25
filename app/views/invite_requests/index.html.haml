@@ -1,0 +1,35 @@
+.main
+  %h1 Invite Requests
+
+  %dl#invite_requests
+    - @invite_requests.each do |i|
+      - invitation = Invite.find_by_email(i.email)
+      - user = User.find_by_email(i.email)
+      %dd
+        %span
+          - if user
+            == (Signed up #{time_ago_in_words(user.created_at)} ago)
+          - elsif invitation
+            == (Invitation sent #{time_ago_in_words(invitation.created_at)} ago)
+          - else
+            (new)
+        = i.email
+        %br
+        %small== Requested #{time_ago_in_words(i.created_at)} ago.      
+        
+          
+          
+
+- content_for :css do
+  :plain
+    #invite_requests dd {
+      padding: 3px;
+      border-bottom: 1px solid #DDD;
+    }
+    #invite_requests dd small {
+      color: #999;
+    }
+    #invite_requests dd span {
+      float: right;
+      color: #666
+    }

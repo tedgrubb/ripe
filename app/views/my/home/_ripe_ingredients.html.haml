@@ -1,0 +1,6 @@
+.sb-box.clearfix
+  %h2 Use up these ingredients
+  %ul#ripe_ingredients
+    - @ripe_pantry_ingredients.each do |pi|
+      - ingredient = pi.ingredient
+      %li= image_tag ingredient.photo_path(:small)

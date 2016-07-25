@@ -1,0 +1,7 @@
+<% if @all_categories %>
+<ul id="category_nav" class="clearfix">
+  <%- @all_categories.each do |cat| -%>
+    <li><%= link_to "<span>#{cat.name.gsub(/\&/, "&amp;")}</span>", :controller => 'categories', :id => cat, :action => "show", :order => @sort_by %> </li>
+  <%- end -%>
+</ul>
+<% end %>

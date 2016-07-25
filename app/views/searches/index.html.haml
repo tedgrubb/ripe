@@ -1,0 +1,3 @@
+.main
+  %h1== #{pluralize(@count, "recipe", "recipes")} found matching "#{@query}"
+  %ul.recipes= render :partial => "/recipes/li", :collection => @results if @results

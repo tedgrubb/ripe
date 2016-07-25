@@ -1,0 +1,8 @@
+%form#invite_form{:method => "post", :action => invites_path}
+  %h2 Invite a friend
+  #invite_form_fields.clearfix
+    %div
+      %input{:type => "hidden", :name => "invite[sender]", :value => current_user.id}
+    %input{:type => "text", :id => "invite_email", :class => "text", :name => "invite[email]"} 
+    %input{:type => "submit", :class => "submit", :value => ""}
+  %small{:style => "display:block;color: #777;padding-top:2px"}== (#{pluralize(@user.invites, "invite")} left)

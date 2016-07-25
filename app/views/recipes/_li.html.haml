@@ -1,0 +1,19 @@
+- recipe ||= li
+%li.recipe.cell.clearfix{:class => "#{"has-photo" if recipe.has_any_photo?}"}
+
+  .thumbnail{:style => "background-image: url(#{recipe.photo_path(:thumbnail)})"}
+
+  .content
+    .check{:class => "#{'on' if recipe.can_make?(current_user)}"}
+    .favorite{:class => "#{'on' if recipe.favorite?(current_user)}"}
+
+    -if recipe.published == false
+      %strong{:style => "font-size: 80%;color:red "} (Not Published)
+
+    %h3
+      = link_to "<strong>#{recipe.name}</strong>", recipe, :class => "recipe_title"
+    = display_rating(recipe)
+    .left= recipe_comment_count(recipe)
+    .left.view_count== #{pluralize(recipe.views.to_i, "View")}
+    - if recipe.user
+      .created_at== Added by #{link_to recipe.user.name, recipe.user}

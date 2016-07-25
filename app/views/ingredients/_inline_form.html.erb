@@ -1,0 +1,9 @@
+<% form_for(@ingredient, :html => {:multipart => true }) do |f| %>
+  <div>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.submit "Save" %> or
+    <%= link_to_function "Cancel", nil, :class => "cancel" %>
+  </div>
+<% end %>

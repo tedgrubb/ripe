@@ -1,0 +1,9 @@
+#content
+  %ul.list{:title=>"Your Pantry",:selected=>"true"}
+    - if @ingredients.any?
+      - @ingredient_categories.each do |category, pantry_ingredients|
+        %li.title= category.name
+        - pantry_ingredients.each do |pantry_ingredient|
+          %li.ingredient.cell.clearfix
+            = freshomatic(pantry_ingredient, false)
+            = link_to pantry_ingredient.ingredient.name, pantry_ingredient.ingredient, :style => "padding-left:50px;z-index:5;position:relative"

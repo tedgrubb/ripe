@@ -1,0 +1,9 @@
+page << "$('recipes').hide();"
+if @favorite_recipes.any?
+  page.replace_html 'recipes', :partial => "/my/favorites/list", :object => @favorite_recipes
+else
+  page.replace_html 'recipes', :partial => "/my/favorites/no_favorites"
+end
+page << "updateTabs('.favorites')"
+page << "$('recipe-title').update('Favorite Recipes')"
+page << "window.location.hash = '#favorites'"

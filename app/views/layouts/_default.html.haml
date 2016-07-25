@@ -1,0 +1,42 @@
+!!!
+%html
+  %head
+    %title= yield :title
+    %meta{'http-equiv' => "Content-Type", 'content' => 'text/html; charset=utf-8'}
+    %link{:rel=>"shortcut icon", :type=>"image/x-icon", :href=>"/favicon.png"}
+    = yield :meta
+    = javascript_include_tag 'prototype'
+    = javascript_include_tag 'effects'
+    = javascript_include_tag 'application'
+    = yield :js_include
+    = stylesheet_link_tag 'reset', :media => "all"
+    = stylesheet_link_tag 'global', :media => "all"
+    = stylesheet_link_tag 'master', :media => "all"
+    = stylesheet_link_tag 'print', :media => "print"
+    %link{:href=>"http://s3.amazonaws.com/getsatisfaction.com/feedback/feedback.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}
+    = yield :css_link
+
+    %style{:type=>"text/css",:media=>"all"}= yield :css
+
+    %script{:type => "text/javascript"}
+      = yield :js
+      - unless flash[:notice].blank?
+        :plain
+          document.observe("dom:loaded", function() {
+            show_flash();
+          });
+      - unless @no_trackback
+        set_trackback();
+      
+  %body
+    #overlay{hidden}= partial 'layouts/common/facebox'
+    = iphone_option
+    = partial 'layouts/common/header'
+    #wrapper
+      = partial '/layouts/common/ads/adsense_banner' if @show_banner
+      #container.clearfix
+        = yield
+    = partial 'layouts/common/footer'
+
+    = partial 'layouts/google_analytics'
+    = partial 'layouts/gsfn_feedback'

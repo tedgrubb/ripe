@@ -1,0 +1,11 @@
+.main
+  .content-head.clearfix 
+    %h1 Recipes
+    =partial "/recipes/sort"
+  - if @recipes.empty?
+    Sorry, we don't have any of those recipes yet.
+    = link_to "Add your favorites!", new_recipe_path
+  - else
+  %ul.recipes
+    = render :partial => "recipes/li", :collection => @recipes
+  = will_paginate @recipes, :order => params[:order]

@@ -1,0 +1,76 @@
+%h1== Welcome #{@user.name}! <span>Let's get your pantry set up.</span>
+.main
+  -form_tag user_setup_path(@user), :method => "put", :id => "questions" do
+    -fields_for @user do |f|
+      %ol
+        %li.clearfix
+          %h2 What kind of food do you like to cook?
+          - @cuisines.in_groups_of(10).each do |cuisines|
+            %dl{:style => "float:left; width:25%"}
+              - cuisines.each do |cuisine|
+                - next if cuisine.nil?
+                - checked = @user.cuisines.include?(cuisine)
+                %dd{:style => "float:none;width:100%"}== <input type="checkbox" id="#{dom_id(cuisine)}" name="user[cuisine_preferences][#{cuisine.id}]" #{"checked=\"checked\"" if checked}> #{label_tag dom_id(cuisine), cuisine.name}
+        /%li.clearfix
+        /%dl
+        /%dt 2. What food categories do you like to make?
+        /%dd== <input type="checkbox"> #{label_tag "Appetizers"}
+        /%dd== <input type="checkbox"> #{label_tag "Drinks"}
+        /%dd== <input type="checkbox"> #{label_tag "Breakfast"}
+        /%dd== <input type="checkbox"> #{label_tag "Baked Goods"}
+        /%dd== <input type="checkbox"> #{label_tag "Desserts"}
+        /%dd== <input type="checkbox"> #{label_tag "Main Courses"}
+        /%dd== <input type="checkbox"> #{label_tag "Side Dishes"}
+        /%dd== <input type="checkbox"> #{label_tag "Soups"}
+        /%dd== <input type="checkbox"> #{label_tag "Salads"}
+        /%li.clearfix
+        /%dl
+        /%dt 3. Do you have any food allergies?
+        /%dd== <input type="checkbox"> #{label_tag "peanuts"}
+        /%dd== <input type="checkbox"> #{label_tag "Shell fish"}
+        /%dd== <input type="checkbox"> #{label_tag "eggs"}
+        /%dd== <input type="checkbox"> #{label_tag "soy"}
+        /%dd== <input type="checkbox"> #{label_tag "wheat"}
+        /%dd== <input type="checkbox"> #{label_tag "Dairy"}
+        /%li.clearfix
+        /%dl
+        /%dt 4. Do you have any dietary restrictions?
+        /%dd== <input type="checkbox"> #{label_tag "Vegan"}
+        /%dd== <input type="checkbox"> #{label_tag "Organic"}
+        /%dd== <input type="checkbox"> #{label_tag "Vegetarian"}
+        /%dd== <input type="checkbox"> #{label_tag "Pescatarian"}
+        /%dd== <input type="checkbox"> #{label_tag "Sugar Free"}
+        /%dd== <input type="checkbox"> #{label_tag "Reducing Inflammation"}
+        /%dd== <input type="checkbox"> #{label_tag "Cholesterol Free"}
+        /%dd== <input type="checkbox"> #{label_tag "Fat Free"}
+        /%dd== <input type="checkbox"> #{label_tag "Yeast Free"}
+        /%dd== <input type="checkbox"> #{label_tag "Allergy Free"}
+        /%dd== <input type="checkbox"> #{label_tag "Sulfite Free/Low Sulfites"}
+        /%dd== <input type="checkbox"> #{label_tag "Lactose Free"}
+        /%dd== <input type="checkbox"> #{label_tag "Gluten Free"}
+        %li.clearfix
+          %dl
+            %dt What's your favorite food?
+            %dd= f.text_field :favorite_food, :size => "35", :class => "text"
+      %input{:type => "submit", :value => "Continue"}
+
+    -content_for :css do
+      :plain
+        #questions {
+        }
+        #questions ol li {
+          clear: left;
+          margin-bottom: 20px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #DDD
+          }
+        #questions ol dl dt {
+          clear: left;
+          font-size: 1.2em;
+          font-weight: bold;
+          margin-bottom: 10px;
+          }
+        #questions ol dl dd {
+            width: 25%;
+            float: left;
+          }

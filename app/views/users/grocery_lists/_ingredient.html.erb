@@ -1,0 +1,28 @@
+<%# GROCERY LIST INGREDIENT %>
+<%- ingredient ||= ingredient -%>
+<div id="<%= dom_id(ingredient) %>" class="ingredient cell clearfix">
+  <%- if current_user && current_user.can_edit_grocery_list(@grocery_list) -%>
+    <p class="add">
+      <%= link_to_remote 'delete', :url => user_grocery_list_ingredient_path(@user, @grocery_list, ingredient), 
+          :method => :delete,
+          :confirm => "Remove #{ingredient.name} from your grocery list?", 
+          :html => {:title => "Remove", :class => "delete"} %>
+    </p>
+  <%- end -%>
+  <p class="title">
+    <%- if current_user && current_user.can_edit_grocery_list(@grocery_list) -%>
+      <%- if current_user.pantry.ingredients.include?(ingredient) -%>
+        <%= link_to_function "<strong>#{ingredient.name}</strong>", nil, :class => "checked" %>
+      <%- else -%>
+        <%= link_to_remote "<strong>#{ingredient.name}</strong>",
+            :url => checked_off_user_grocery_list_ingredient_path(current_user, current_user.grocery_list, ingredient.id),
+            :method => :post,
+            :before => "$(this).toggleClassName('loading')",
+            :html => {:id => dom_id(ingredient, "grocery_link")}
+             %>
+      <%- end -%>
+    <%- else -%>
+      <strong><%= ingredient.name %></strong>
+    <%- end -%>
+  </p>
+</div>

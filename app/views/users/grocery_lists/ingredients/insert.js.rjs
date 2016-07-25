@@ -1,0 +1,4 @@
+page.insert_html :top, 'grocery-list-ingredients', :partial => "/users/grocery_lists/ingredient", :object => @ingredient
+page[@ingredient].visual_effect :highlight
+page << "$('live_search').searcher.reset()"
+page << "hide_empty_list()"

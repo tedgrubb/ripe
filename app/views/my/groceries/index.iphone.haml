@@ -1,0 +1,8 @@
+#content
+  %ul{:title => "Grocery List", :selected => "true"}
+    - if @grocery_list_ingredients.any?
+      - @grocery_list_categories.each do |category, ingredients|
+        %li.title= category.name
+        - ingredients.each do |ingredient|
+          %li.ingredient.cell.clearfix
+            = link_to_remote ingredient.name, :url => checked_off_user_grocery_list_ingredient_path(current_user, current_user.grocery_list, ingredient.id), :method => :post, :before => "$(this).toggleClassName('loading')", :after => "$(this).toggleClassName('loading').addClassName('checked');", :html => {:id => dom_id(ingredient, "grocery_link"), :class => "checklist"}

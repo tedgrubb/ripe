@@ -1,0 +1,6 @@
+page['add-link'].update("Added to your grocery list!")
+page['add-link'].highlight
+page['add-link'].addClassName("checked")
+@to_add.each do |ingredient|
+  page[ingredient].add_class_name 'on_list'
+end

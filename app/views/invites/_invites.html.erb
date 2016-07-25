@@ -1,0 +1,11 @@
+<dl id="invites">
+  <dt><strong>Invites:</strong></dt><br />
+  <%= render :partial => "invite", :collection => @invites %>
+</dl>
+
+<% content_for :css do %>
+  #invites dd {
+    padding: 3px;
+    border-bottom: 1px solid #DDD;
+  }
+<% end %>

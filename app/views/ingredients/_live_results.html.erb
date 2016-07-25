@@ -1,0 +1,7 @@
+<ul id="results" class="results">
+<% unless @results.empty? %>
+  <%= render :partial => "result", :collection => @results %>
+<% else %>
+  <li>Couldn't find that ingredient!</li>
+<% end %>
+</ul>

@@ -1,0 +1,3 @@
+page.insert_html :top, 'pantry-ingredients', :partial => "/users/pantries/ingredient", :object => @pantry_ingredient
+page[@pantry_ingredient.ingredient].visual_effect :highlight
+page << "$('live_search').searcher.reset()"

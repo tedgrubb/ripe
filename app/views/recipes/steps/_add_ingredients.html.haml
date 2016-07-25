@@ -1,0 +1,32 @@
+%fieldset#add_ingredients_fs
+
+  .balloon
+    %h2 TIP:
+    Start typing the ingredient you want to add. Select from the suggested ingredients to add measurements and quantity.
+    -if @recipe && @recipe.import_content
+      #original_recipe
+        %dl
+          %dt Original Recipe
+          -content =  @recipe.import_content.split("- ")
+          -content.each do |line|
+            -unless line.blank? || line == "--"
+              -split_line = line.split(".")
+              -split_line.each do |l|
+                %dd=l 
+        %br
+        =link_to "Admin: Create ingredient", new_ingredient_path, :target => "_blank"
+  .inset
+    %h2 INGREDIENTS
+    #ingredients
+      = render :partial => "ingredient", :collection => @recipe_ingredients
+      
+    .row
+      = live_search({:dom_id => "live_search",:url => search_ingredients_path.to_json,:prompted => "Ingredient name"})
+      = link_to_function "Add another ingredient", "showLiveSearch(); $('live_search_input').focus();", :id => "add_ingredient", :style => "#{"display:none" if @new}"
+      
+-content_for "js" do
+  :plain
+    document.observe("dom:loaded", function() {
+      SortableIngredients();
+    });
+  

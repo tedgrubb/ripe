@@ -1,0 +1,8 @@
+%dl#meta.clearfix
+  = partial "servings_calculator" if @recipe.servings
+  %dt= "Time:" unless @recipe.time.blank?
+  %dd.preparation-time.hmeasure= @recipe.time unless @recipe.time.blank?
+  %dt= "Category:" unless @recipe.category.blank?
+  %dd= @recipe.category unless @recipe.category.blank?
+  %dt= "Cuisine:" unless @recipe.cuisine.blank?
+  %dd= @recipe.cuisine.name unless @recipe.cuisine.blank?

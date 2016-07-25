@@ -1,0 +1,9 @@
+- partial 'layouts/default' do
+
+  - title(@html_title)
+
+  - content_for :js_include do
+    = javascript_include_tag 'recipe'
+    = javascript_include_tag 'dragdrop'
+  
+  = yield

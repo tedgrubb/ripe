@@ -1,0 +1,9 @@
+.main
+  %h1 Add a Recipe
+  = error_messages_for :recipe
+  #recipe_form
+    - form_for(@recipe, :html => {:multipart => true, :onsubmit => "return allow_submit()"}) do |f|
+      = render :partial => "form", :locals => {:recipe => @recipe, :submit_label => "Post your recipe", :new => true}
+      %fieldset
+        = f.submit "Publish your recipe", :name => "recipe[published]", :class => "button right", :onmousedown => "submittable = true"
+        = f.submit "Save", :class => "button right", :style => "margin-right: 10px", :onmousedown => "submittable = true"

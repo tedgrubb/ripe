@@ -1,0 +1,8 @@
+#flickr_photos{:style => "float:right"}
+  -if @flickr_photos.any?
+    %table
+      - @flickr_photos.in_groups_of(6) do |photo_group|
+        %tr
+          -photo_group.each do |photo|
+            - next if photo.nil?
+            %td=link_to_function image_tag(photo.url(:thumbnail)), "set_flickr_photo(this, '#{photo.url(:small)}', '#{photo.url_photopage}')"

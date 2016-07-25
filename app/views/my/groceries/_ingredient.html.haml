@@ -1,0 +1,11 @@
+=# GROCERY LIST INGREDIENT
+- ingredient ||= ingredient
+%div.ingredient.cell.clearfix{:id => dom_id(ingredient)}
+  %p.add= link_to_remote 'delete', :url => user_grocery_list_ingredient_path(@user, @grocery_list, ingredient), :method => :delete,:confirm => "Remove #{ingredient.name} from your grocery list?", :html => {:title => "Remove", :class => "delete"}
+
+  %p.title
+    - if current_user.pantry.ingredients.include?(ingredient)
+      = link_to_function "#{ingredient.name}", nil, :class => "checked"
+    -else
+      = link_to_remote "#{ingredient.name}",:url => checked_off_user_grocery_list_ingredient_path(current_user, current_user.grocery_list, ingredient.id),:method => :post,:before => "$(this).toggleClassName('loading')",:html => {:id => dom_id(ingredient, "grocery_link")}
+      

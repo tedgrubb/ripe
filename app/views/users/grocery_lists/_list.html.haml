@@ -1,0 +1,32 @@
+.grocery-list
+  #new_grocery_list
+    %input#list_name{{:type => "hidden", :name => "grocery_list[name]"}}
+    #grocery-list-ingredients.catalog.ingredients
+      - if @grocery_list_categories.any?
+        - @grocery_list_categories.each do |category, ingredients|
+          .group
+            %h2= h category.name if category
+            - ingredients.each do |ingredient|
+              = partial "ingredient", :ingredient => ingredient
+      - elsif current_user && current_user.can_edit_grocery_list(@grocery_list)
+        %p#empty_list
+          %strong{{:style => "font-size: 1.1em;display:block"}} Your grocery list is empty!
+          %span{{:style => "font-size:1em"}} 
+            Add ingredients using the search box, or choose from
+            = link_to "popular ingredients"
+      -else
+        %p No ingredients added yet.
+          
+:javascript
+  save_grocery_list = function() {
+    var name = prompt('Name your new grocery list', "My new grocery list");
+    if(name != null && name != "") {
+      $('list_name').value = name;
+      $('new_grocery_list').submit();
+    }
+  }
+  hide_empty_list = function() {
+    if($('empty_list')) {
+      $('empty_list').hide();
+    }
+  }

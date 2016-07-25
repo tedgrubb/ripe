@@ -1,0 +1,2 @@
+module Users::GroceryListsHelper
+end

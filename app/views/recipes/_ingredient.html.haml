@@ -1,0 +1,23 @@
+- recipe_ingredient ||= ingredient
+- ingredient = recipe_ingredient.ingredient
+%div.ingredient.clearfix{:id => dom_id(ingredient)}
+  = link_to_function 'x', "$(this).up('.ingredient').remove()", :title => "Remove", :class => "remove"
+  %small.move{:title => "Move"}
+  
+  = centered_photo(ingredient.photo_path(:small))
+  %p.name= ingredient.name
+  
+  %div{:style => "float: left"}
+    %label Quantity
+    %input.amount{:type => "text", :value => recipe_ingredient.entered_quantity, :name => "recipe[new_ingredients][entered_quantity][]"}
+    
+  %div{:style => "float: left"}
+    %label Measurement
+    %input.measurement{:type => "text", :value => recipe_ingredient.measurement, :name => "recipe[new_ingredients][measurement][]"}
+    
+  %div{:style => "float: left"}
+    %label Note
+    %input.note{:type => "text", :value => recipe_ingredient.note, :name => "recipe[new_ingredients][note][]"}
+    
+  %div 
+    %input.ingredient_id{:type => "hidden", :value => recipe_ingredient.ingredient_id, :name => "recipe[new_ingredients][ingredient_id][]"}

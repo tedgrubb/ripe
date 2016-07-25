@@ -1,0 +1,48 @@
+<%- ingredient ||= ingredient -%>
+<%- first = ingredient_counter == 0 -%>
+<div id="<%= dom_id(ingredient) %>" class="cell clearfix<%= " first" if first %>">
+  
+  <%- if current_user -%>
+    <%- in_pantry = current_user.in_pantry(ingredient) -%>
+    <%- in_list = current_user.in_grocery_list(ingredient) -%>
+    <div class="actions">
+      <div id="<%= dom_id(ingredient, "pantry_link") %>" <%= "class=\"check\"" if in_pantry %>>
+        <%- if in_pantry -%>
+          You already have this
+        <%- else -%>
+        <%= link_to_remote  "Add to your pantry", 
+                            :url => user_pantry_ingredients_path(current_user, :pantry_ingredient => {:ingredient_id => ingredient.id}), 
+                            :method => :post,
+                            :html => {:class => "add-pantry"} %>
+        <%- end -%>
+      </div>
+      <div id="<%= dom_id(ingredient, "grocery_link") %>" <%= "class=\"check\"" if in_list %>>
+        <%- if in_list -%>
+          It's on your <%= link_to "grocery list", user_grocery_lists_path(current_user) %>.
+        <%- else -%>
+        <%= link_to_remote  "Add to your grocery list", 
+                            :url => user_grocery_list_ingredients_path(current_user, current_user.grocery_list), 
+                            :method => :post,
+                            :with => "'grocery_list_ingredient[ingredient_id]='+#{ingredient.id}",
+                            :html => {:class => "add-grocery"} %>
+        <%- end -%>
+      </div>
+    </div>
+    
+    <%- if current_user.is_admin? -%>
+    <div class="admin_tools">
+      <%= link_to 'edit', edit_ingredient_path(ingredient), :rel => "nofollow" %>
+      <%= link_to_remote 'delete', :url => ingredient,
+          :method => :delete,
+          :confirm => "Remove #{ingredient.name} from your pantry?",
+          :html => {:title => "Remove"} %>
+
+    </div>
+    <%- end -%>
+    
+  <%- end -%>
+  
+  <div class="photo"><%= link_to image_tag(ingredient.photo_path(:small)), ingredient %></div>
+  <p class="title"><%= link_to "<strong>#{ingredient.name}</strong>", ingredient %></p>
+  <%= ingredient_category_list(ingredient) %>
+</div>

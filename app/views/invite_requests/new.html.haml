@@ -1,0 +1,32 @@
+.main
+  #invite_request
+    #invite.clearfix
+      %h1 Request a beta invite
+      =partial "form"
+  
+-content_for :css do
+  :plain
+    #container .main {
+      margin: 0 auto;
+      float: none;
+      display: block;
+      min-height: 0;
+    }
+    label {
+      display:block
+    }
+    .text {
+      float: left;
+      font-size: 1.8em;
+      margin-right: 10px
+    }
+    .submit {
+      float: left;
+    }
+
+    #invite {
+      width: 450px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+    

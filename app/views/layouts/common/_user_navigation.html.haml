@@ -1,0 +1,7 @@
+%ul#navigation
+  %li{:class => "first #{"on" if @user_nav == :pantry}"}= link_to "Pantry", my_pantry_path
+  %li{:class => "#{"on" if @user_nav == :groceries}"}= link_to "Groceries", my_groceries_path
+  %li{:class => "#{"on" if @user_nav == :recipes}"}= link_to "Recipes", recipes_path
+  =#%li{:class => "#{"on" if @user_nav == :my_recipes}"}= link_to "My Recipes", my_recipes_path
+  %li{:class => "#{"on" if @user_nav == :recommendations}"}= link_to "Recommendations", my_recommendations_path
+  %li.recipe= link_to "<span>Add a recipe!</span> #{image_tag "nav_new.png"}", new_recipe_path

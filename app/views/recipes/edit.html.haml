@@ -1,0 +1,10 @@
+.main
+  %h1== Editing: #{@recipe.name}
+  = error_messages_for :recipe
+  #recipe_form
+    - form_for(@recipe, :html => {:multipart => true, :onsubmit => "return allow_submit()"}) do |f|
+      = partial "form", :recipe => @recipe, :submit_label => "Save Changes", :new => false
+
+      = link_to_remote 'Delete this recipe', :url => @recipe, :method => :delete, :confirm => "Are you sure you want to delete this?", :html => {:class => "delete right"}
+      = f.submit "Publish your changes", :name => "recipe[published]", :class => "submit right", :onmousedown => "submittable = true"
+      = f.submit "Save", :class => "submit right", :style => "margin-right: 10px", :onmousedown => "submittable = true" unless @recipe.published

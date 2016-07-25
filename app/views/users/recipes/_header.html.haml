@@ -1,0 +1,8 @@
+- if current_user == @user
+  .catalog_header
+    %h1 Your recipes
+- else
+  %br
+  .content-head.clearfix
+    %h1== #{possessive(@user.name)} recipes
+    = partial 'users/profile_nav'

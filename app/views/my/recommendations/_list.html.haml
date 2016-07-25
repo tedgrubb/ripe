@@ -1,0 +1,4 @@
+%ul
+  = render :partial => "recipes/li", :collection => @suggested_recipes
+%br
+= link_to "View more recommendations", my_recommendations_path(:page => 2) if @suggested_recipes.next_page == 2

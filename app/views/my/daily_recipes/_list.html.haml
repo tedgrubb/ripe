@@ -1,0 +1,11 @@
+- if @daily_recipes.any?
+  %ul
+    = render :partial => "recipes/recommendation", :collection => @daily_recipes
+- else
+  %p
+    %h2 We can't find any recipes for you to make today.
+    %h4{:style => "margin-bottom:10px"} Try one of the following:
+    %ol{:style => "margin-left:20px"}
+      %li== #{link_to "Add ingredients", ingredients_path} to start getting recommendations.
+      %li== #{link_to "Update your preferences", user_setup_path(@user)} to get better recommendations.
+      %li== #{link_to "Find recipes", recipes_path} and add them to #{link_to "your favorites"}.

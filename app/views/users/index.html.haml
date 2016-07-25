@@ -1,0 +1,16 @@
+.main
+  .catalog
+    %ul
+      - @users.each do |user|
+        %li.cell.clearfix
+          .photo
+            = link_to image_tag(user.photo_path(:small)), user
+          %p.created_at{:style => "float: right;color:#999"}== Joined #{time_ago_in_words user.created_at}
+          %p.title{:style=>"padding-bottom:5px"}= link_to "<strong>#{user.name}</strong>", user
+          %div{:style => "color:#666"}
+            - if user.pantry
+              %small.ingredients= pluralize user.pantry.ingredients.length, "ingredient"
+              %br
+            %small.recipes= pluralize user.recipes.length, "recipe"
+
+  = will_paginate @users

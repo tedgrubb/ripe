@@ -1,0 +1,137 @@
+<div id="follow">
+  <div id="stage">
+    <%= link_to image_tag("powered_by.png", :alt => "itsripe.com"), "http://itsripe.com", :id => "logo", :title => "itsripe.com" %>
+    <%= link_to "Print", formatted_recipe_url(@recipe, :print), :class => "print", :target => "_new" %>
+    <h1><%= @recipe.name %></h1>
+    <p id="creator">From <%= User.find_by_id(@recipe.user_id).login %></p>
+    <div id="meta">
+    <% if @recipe.servings %>
+      <dt>Servings:</dt> 
+      <dd><%= @recipe.servings %></dd>
+    <% end %>
+
+    <% if @recipe.time %>
+      <dt>Time:</dt> 
+      <dd><%= @recipe.time %></dd>
+    <% end %>
+
+    <% if @recipe.category %>
+      <dt>Category:</dt> 
+      <dd><%= @recipe.category %></dd>
+    <% end %>
+
+    <% if @recipe.cuisine %>
+      <dt>Cuisine:</dt> 
+      <dd><%= @recipe.cuisine %></dd>
+    <% end %>
+    </div>
+    <h2>Ingredients</h2>
+    <ul id="ingredients">
+      <% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
+        <li>
+          <strong><%= recipe_ingredient.entered_quantity %>
+          <%= recipe_ingredient.measurement %></strong>
+          <%= recipe_ingredient.ingredient.name %>
+        </li>
+      <% end %>
+    </ul>
+    <h2>Directions</h2>
+    <div id="steps">
+      <ol>
+      <% @recipe.steps.each do |step| %>
+        <li class="step"><div class="step_i"><%= step.description %></div></li>
+      <% end %>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<% content_for 'css' do %>
+  body {
+    margin: 0;
+    padding: 5px;
+    background: #FFF;
+    font: 13px Arial;
+    border: 1px solid #DDD;
+  }
+  .print {
+    display: block;
+    margin-top: 10px;
+    clear: right;
+    float: right;
+    font-weight: bold;
+    font-size: 90%;
+    color: #666;
+    padding-left: 18px;
+    background: transparent url(/images/print-icon.png) no-repeat;
+  }
+  .print:hover {
+    color: #333;
+  }
+  #creator {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 1em;
+  }
+  #meta {
+    margin-bottom: 2em;
+  }
+  #meta dt, #meta dd {
+    display: inline;
+  }
+  #meta dt {
+    font-weight: bold;
+  }
+  #meta dd {
+    margin-right: 10px;
+  }
+  #logo {
+    float: right;
+    margin-top: -9px;
+    margin-left: 10px;
+  }
+  img {
+    border: none;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    font-weight: normal;
+    font-size: 1.6em;
+    margin-bottom: 0;
+  }
+  h2 {
+    font-size: 90%;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 1px solid #fbac85;
+    padding-bottom: 0.1em;
+    margin-bottom: 0.7em;
+  }
+  #follow {
+    padding: 20px;
+    background-color: #ffffdf;
+  }
+  #controls {
+    margin-bottom: 10px;
+  }
+  #ingredients {
+    list-style: none;
+    font-size: 110%;
+    margin-bottom: 2em;
+  }
+  #ingredients li {
+    margin-bottom: 0.5em;
+  }
+  #steps {
+    font-size: 110%;
+  }
+  #steps ol {
+    padding-left: 1.5em;
+  }
+  #steps .step {
+    margin-bottom: 1em;
+  }
+<% end %>

@@ -1,0 +1,288 @@
+- @new = new
+- fields_for recipe do |f|
+  = partial "recipes/steps/add_details", :f => f, :submit_label => submit_label
+  = partial "recipes/steps/add_ingredients", :f => f, :submit_label => submit_label
+  = partial "recipes/steps/add_steps", :f => f, :submit_label => submit_label
+  
+- step_template = render :partial => "step"
+
+:javascript
+  var step_template = #{step_template.to_json};
+
+  add_step = function() {
+    $('steps_list').insert(step_template)
+    step = $('steps_list').select('.step').last();
+    step_number = parseInt($F(step.previous().down('.number')))+1;
+    step.down('.number').value = step_number;
+    step.down('label').update(step_number+1);
+  }
+  
+  showLiveSearch = function() {
+    $('add_ingredient').hide();
+    $('live_search').show();
+  }
+  
+  hideLiveSearch = function() {
+    $('add_ingredient').show();
+    $('live_search').hide();
+  }
+  
+  validate = function(scope, callback, attributes) {
+    var errors = false;
+    $(scope).select('.required').each(function(el) {
+      if($F(el.down('input')) == "") {
+        alert(el.down('label').innerHTML+" is required!");
+        errors = true;
+      }
+    })
+    if(!errors) {
+      callback(attributes)
+    }
+  }
+  
+  allow_submit = function() {
+    return submittable;
+  }
+  
+  document.observe("dom:loaded", function() {
+    submittable = false;
+    #{"hideLiveSearch();" unless @new}
+  });
+
+
+-content_for :css do
+  :plain
+    #container .main {
+      width: 930px;
+      }
+    #recipe_form fieldset {
+      padding: 20px 20px 15px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      border: 1px solid #fdfda0;
+      background-color: #FFFFCC;
+      }  
+    #recipe_form h2 {
+      font-size: 1.2em;
+      color: #000;
+      }
+    #recipe_form .legend {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+      font-weight: bold;
+      }
+    #recipe_form label {
+      color: #CC4E00;
+      display:block;
+      margin-bottom: 3px;
+      font-weight: bold;
+      text-transform: uppercase;
+      }
+    #recipe_form .row {
+      padding: 5px 0;
+      margin-bottom: 5px;
+      border: 1px solid transparent;
+    }
+    #recipe_form .step_photo {
+      clear: left;
+      margin-left: 38px;
+      margin-top: 2px;
+      padding: 4px;
+      width: 330px;
+    }
+    #recipe_form .balloon {
+      color: #444;
+      float: right;
+      width: 210px;
+      height: 65px;
+      line-height: 1.2;
+      padding: 10px 10px 10px 20px;
+      background: transparent url(/images/recipe_balloon.png) no-repeat;
+    }
+    #recipe_form .balloon h2 {
+      font-size: 1em;
+      display:inline;
+      margin-bottom: 0;
+    }
+
+    #recipe_form .delete {
+      padding: 8px 12px 7px 38px;
+      color: #000;
+      display:block;
+      font-weight: bold;
+      font-size: 1.1em;
+      border-radius: 4px;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      text-decoration: none;
+      border: 2px solid black;
+      margin-left: 20px;
+      background: #ffeaea url(/images/cross.png) no-repeat 12px 50%;
+      }
+    #recipe_form .delete:hover {
+      text-decoration: underline;
+      }
+    #recipe_form #recipe_name {
+      width: 590px;
+      font-size: 1.2em;
+      padding: 3px 2px;
+      }
+    #recipe_form #recipe_description {
+      width: 590px;
+      font-size: 100%;
+      padding: 3px 4px;
+      }
+
+    #live_search {
+      width: 500px;
+      }
+    #live_search input {
+      width: 500px;
+      padding: 5px 0 5px 3px;
+      }
+    #live_search img.spinner {
+      top: 25% !important;
+    }
+    #live_search #results {
+      width: 510px;
+      }
+  
+    #recipe_form #ingredients .ingredient {
+      width: 580px;
+      padding: 10px;
+      position: relative;
+      margin: 5px 0;
+      background-color: Cornsilk;
+      border: 1px solid #FFF;
+      }
+    #recipe_form #ingredients .ingredient .remove {
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      position: absolute;
+      }
+    #recipe_form #ingredients .ingredient .move {
+      cursor:move;
+      top: 10px;
+      right: 30px;
+      z-index: 2;
+      position: absolute;
+      text-indent: -10000px;
+      overflow:hidden;
+      width: 16px;
+      height: 16px;
+      background: transparent url(/images/move_arrow.png) no-repeat;
+      }
+    #recipe_form #ingredients .ingredient label {
+      font-size: 80%;
+      font-weight: bold;
+      }
+    #recipe_form #ingredients .photo_wrap {
+      float: left;
+      width: 65px;
+      padding: 1px;
+      margin-right: 20px;
+      text-align: center;
+      border: 1px solid #CCC;
+      background-color: #FFF;
+      }
+    #recipe_form #ingredients .photo_wrap div {
+      width: 65px;
+      height: 65px;
+      display: table-cell;
+      vertical-align: middle;
+      }
+    #recipe_form #ingredients .name {
+      color: #333;
+      font-size: 1.2em;
+      font-weight: bold;
+      padding-bottom: 5px;
+      padding-right: 35px;
+      }
+    #recipe_form #ingredients .amount {
+      width: 50px;
+      font-size: 1.1em;
+      margin-right: 15px;
+      }
+    #recipe_form #ingredients .measurement {
+      width: 100px;
+      font-size: 1.1em;
+      margin-right: 15px;
+      }
+  
+    #recipe_form .note {
+      width: 280px;
+      font-size: 1.1em;
+      }
+    #recipe_form #steps_list {
+      width: 620px;
+      }
+    #recipe_form #steps_list label {
+      color: #FFF;
+      float: left;
+      width: 30px;
+      margin-right: 8px;
+      height: 20px;
+      text-indent: 1px;
+      padding: 5px 0;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+      background-color: #cc4e00;
+      background: transparent url(/images/step-circle.png) no-repeat;
+      }
+    #recipe_form #steps_list label:after {
+      content: "";
+      }
+    #recipe_form #steps_list textarea {
+      float: left;
+      width: 540px;
+      padding: 4px 6px;
+      margin-right: 4px;
+      font-size: 1em;
+      float: left;
+      }
+    #add_step, #add_ingredient {
+      background: transparent url(/images/add-step.png) no-repeat 0 0;
+      color:#CC4E00;
+      display:block;
+      font-size:1.2em;
+      font-weight:bold;
+      padding: 6px 0 6px 38px;
+      }
+    #add_ingredient {
+      margin-top: 5px;
+      }
+    #original_recipe {
+      float:right;
+      background:#FFF;
+      margin-top: 40px;
+      padding:10px;
+      width:200px;
+      max-height:400px;
+      overflow:auto;
+      border: 4px solid #333;
+      }
+    #original_recipe dl dd {
+      display:block;
+      line-height: 1;
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+      border-bottom: 1px dotted #CCC;
+      }
+    #original_recipe dl dt {
+    font-size: 1em;font-weight:bold;margin-bottom:10px
+      }
+    #recipe_form {
+      position: relative;
+      }
+    #flickr_photos a {
+      float: left;
+      padding: 2px;
+      }
+    #flickr_photos .on {
+      padding: 0;
+      border: 2px solid #fe007f;
+      }

@@ -1,0 +1,38 @@
+body {
+  margin:0;
+}
+#wrapper {
+  margin:0 !important;
+  width: auto !important;
+}
+#container {
+  min-height: auto;
+  background-color: transparent;
+  border: none;
+}
+#header, #nav, #footer, .catalog_header, .sidebar, #super-search, #grocery_header, .add, #fdbk_tab, #grocery-header {
+  display: none;
+}
+.main {
+  width: 900px !important;
+}
+.collection {
+  width: 400px;
+  margin-bottom: 15px!important;
+}
+.main {
+  border: none !important;
+}
+.grocery-list {
+}
+.grocery-list .ingredient {
+  padding: 5px;
+  border-color: #ccecff;
+}
+.grocery-list * {
+  font-weight: normal;
+}
+.grocery-list .ingredient .title a {
+  text-decoration:none;
+  padding-left: 0 !important;
+}

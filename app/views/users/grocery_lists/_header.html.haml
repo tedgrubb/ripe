@@ -1,0 +1,13 @@
+- if current_user && current_user.can_edit_grocery_list(@grocery_list)
+  .catalog_header
+    = live_search({:dom_id => "live_search", :url => search_user_grocery_list_ingredients_path(current_user, @grocery_list).to_json})
+    %h1 Your Grocery List
+  #grocery-header{:style => "#{'display:none' if @grocery_list_ingredients.empty?}"}
+    = link_to image_tag('/images/print.png'), formatted_user_grocery_lists_path(@user, :print), :target => "_blank", :style => "float: right;margin-right: 10px"
+    %p{{:style => "font-size: 1.1em;display:block"}} Check off your groceries to add them to your pantry
+  <script type="text/javascript" language="javascript" src="http://www.dpbolvw.net/placeholder-3656218?target=_top&mouseover=N"></script>
+- else
+  %br
+  .content-head.clearfix
+    %h1== #{possessive(@user.name)} grocery list
+    = partial 'users/profile_nav'

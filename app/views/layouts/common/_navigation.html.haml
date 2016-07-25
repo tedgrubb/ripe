@@ -1,0 +1,54 @@
+#navigation
+  .inner-content
+    = partial "layouts/header_search"
+    - if current_user
+      %ul.clearfix
+        %li.first{:class => "#{'on' if @user_nav == :you}"}
+          = link_to "<span>You</span>", "/", :class => "top-level daddy"
+          %div.context
+            = link_to "Dashboard", my_home_path
+            = link_to "Recommendations", my_recommendations_path
+            = link_to "My Pantry", my_pantry_path
+            = link_to "My Groceries", my_groceries_path
+            = link_to "My Recipes", my_recipes_path
+            = link_to "Profile", user_path(current_user)
+          
+        %li{:class => "#{'on' if @user_nav == :recipes}"}
+          = link_to "<span>Recipes</span>", recipes_path, :class => "top-level daddy"
+          %div.context
+            = link_to "All Recipes", recipes_path
+            = link_to "Your Recipes", my_recipes_path
+            = link_to "Random Recipe", random_recipes_path
+            = link_to "Add a Recipe", new_recipe_path
+            =# link_to "Favorite Recipes"
+          
+        %li{:class => "#{'on' if @user_nav == :ingredients}"}
+          = link_to "<span>Ingredients</span>", ingredients_path, :class => "top-level daddy"
+          %div.context
+            = link_to "All Ingredients", ingredients_path
+            = link_to "Your Ingredients", my_pantry_path
+            = link_to "Random Ingredient", random_ingredients_path
+          
+        =# %li{:class => "#{'on' if @user_nav == :tools}"}
+        =# link_to "<span>Kitchen Tools</span>", kitchen_tools_path, :class => "top-level"
+
+        =# %li{:class => "#{'on' if @user_nav == :iphone}"}
+        =# link_to "<span>Download</span>", my_home_path, :class => "top-level"
+        =#%li.recipe= link_to "<span>Add a recipe!</span> #{image_tag "nav_new.png"}", new_recipe_path
+    - else
+      %ul.clearfix
+        %li.first{:class => "#{'on' if @user_nav == :home}"}
+          = link_to "<span>Home</span>", "/", :class => "top-level"        
+        %li{:class => "#{'on' if @user_nav == :recipes}"}
+          = link_to "<span>Recipes</span>", recipes_path, :class => "top-level"
+          %div.context
+            = link_to "All Recipes", recipes_path
+            = link_to "Random Recipe", random_recipes_path
+            =# link_to "Favorite Recipes"
+        
+        %li{:class => "#{'on' if @user_nav == :ingredients}"}
+          = link_to "<span>Ingredients</span>", ingredients_path, :class => "top-level"
+          %div.context
+            = link_to "All Ingredients", ingredients_path
+            = link_to "Random Ingredient", random_ingredients_path
+        

@@ -1,0 +1,10 @@
+%dt Servings:
+%dd#servings
+  %span#servings_dyn.yield= @servings
+  = link_to_function "<span>Change</span> #{image_tag('change-arrow.png')}", "$('change_servings').toggle()", :class => "change_link"
+  %ul#change_servings{:style => "display:none"}
+    = servings_item(@recipe, 1)
+    = servings_item(@recipe, 2)
+    = servings_item(@recipe, 3)
+    = servings_item(@recipe, 4)
+    = servings_item(@recipe, 5)

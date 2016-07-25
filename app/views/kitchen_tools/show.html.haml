@@ -1,0 +1,4 @@
+= image_tag @kitchen_tool.photo_path(:large), :style => "float:left;margin-right: 20px"
+%p.left
+  %h1= @kitchen_tool.name
+  = link_to "edit", edit_kitchen_tool_path(@kitchen_tool)

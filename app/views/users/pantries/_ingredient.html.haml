@@ -1,0 +1,24 @@
+-# PANTRY INGREDIENT
+- pantry_ingredient = ingredient
+- ingredient = pantry_ingredient.ingredient
+- # If an ingredient is removed and a pantry_ingredient is still around
+- if ingredient.nil?
+  - pantry_ingredient.destroy
+  - return
+- category = ingredient.categories.first()
+- first = ingredient_counter == 0
+
+- recipe_count = ingredient.recipes.count(:all, :conditions => ["published = ?", true])
+
+%div{:id => dom_id(ingredient), :class=>"cell clearfix #{" first" if first}#{" even" if (ingredient_counter+1)%2 == 0}"}
+  - if current_user && current_user.can_edit_pantry(@pantry)
+    .add= link_to_remote 'x', :url => user_pantry_ingredient_path(@user, ingredient), :method => :delete, :html => {:title => "Remove", :class => "remove"}
+
+  %p.photo
+    = link_to image_tag(ingredient.photo_path(:small)), ingredient
+
+  %p.title{:style => "padding-bottom: 5px"}
+    = link_to "<strong>#{ingredient.name}</strong>", ingredient
+    = link_to pluralize(recipe_count, 'recipe'), ingredient, :class => "recipe-count" if recipe_count > 0
+  .fresh-o-matic_container.clearfix
+    = freshomatic(pantry_ingredient)

@@ -1,0 +1,351 @@
+/* slightly enhanced, universal clearfix hack */
+.clearfix { display: inline-block; }
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  content: ".";
+  clear: both;
+  height: 0;
+  }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+
+/* Quickie Reset */
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: Helvetica;
+}
+
+/* Minimum height on body helps preventDefault */
+body {
+	min-height: 316px;
+}
+
+/* Set our fixed elements above everything else */
+#header, #footer {
+	position: relative;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 44px;
+	z-index: 200;
+}
+#header {
+  height: auto;
+  background: #87DC0E url(/images/iphone-header-bg.png) repeat-x left bottom
+}
+/* Header */
+#header h1 {
+	color: #FFF;
+	text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+	font-size: 20px;
+	line-height: 40px;
+	text-align: center;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	padding: 0 10px;
+  border-bottom: 1px solid #457600;
+}
+#header span {
+  padding-left: 10px;
+  font-size: 100%;
+  letter-spacing: -1px;
+	text-shadow: none;
+	font-family: georgia;
+	font-style: italic;
+  color: #ecd5d5;
+}
+#header strong {
+  font-size: 2em;
+	text-shadow: 0 1px -1px #ffa56b;
+	font-family: georgia;
+	font-style: italic;
+  color: #FF8030;
+}
+
+/* Footer */
+#footer {
+	position: absolute;
+	top: 368px;
+	height: 49px;
+}
+
+/* Reposition on scroll */
+body.scrolled #footer {
+	top: 307px;
+}
+
+/* Reposition on orientation change */
+body[orient="landscape"] #footer {
+	top: 220px;
+}
+
+/* Reposition on scroll */
+body.scrolled[orient="landscape"] #footer {
+	top: 159px;
+}
+
+
+/* Container */
+#container {
+	height: 324px;
+}
+
+/* Reposition on scroll */
+body.scrolled #container {
+	height: 263px;
+}
+
+/* Reposition on orientation change */
+body[orient="landscape"] #container {
+	height: 176px;
+}
+
+/* Reposition on scroll */
+body.scrolled[orient="landscape"] #container {
+	height: 115px;
+}
+
+/* Content */
+#content {
+	position: relative;
+}
+
+#content li {
+	position: relative;
+	list-style-type: none;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	-webkit-margin-top-collapse: separate;
+	-webkit-margin-bottom-collapse: separate;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+#content li.active {
+	background: #FFF;
+}
+
+#content li.active span {
+	color: #fff;
+}
+
+#content li span span span {
+	position: absolute;
+	left: 10px;
+	top: 12px;
+	height: 22px;
+	right: 30px;
+	width: auto;
+	color: #000;
+	font-weight: bold;
+	font-size: 20px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	text-decoration: none;
+}
+
+
+
+#footer {
+  background: transparent url(/images/iphone-nav-repeat-x.png) repeat-x;
+}
+#footer ul {
+  list-style:none;
+  padding-top: 3px;
+}
+#footer ul li {
+  float: left;
+}
+#footer a {
+  width: 106px;
+  height: 44px;
+  display:block;
+}
+#footer #nav_grocery {
+  background: transparent url(/images/igrocery-off.png) no-repeat 50% 0;
+}
+#footer #nav_grocery:hover, #footer #nav_grocery.on  {
+  background: transparent url(/images/igrocery-on.png) no-repeat 50% 0;
+}
+#footer #nav_pantry {
+  background: transparent url(/images/ipantry-off.png) no-repeat 50% 0;  
+}
+#footer #nav_pantry:hover, #footer #nav_pantry.on  {
+  background: transparent url(/images/ipantry-on.png) no-repeat 50% 0;
+}
+#footer #nav_recipes {
+  background: transparent url(/images/irecipes-off.png) no-repeat 50% 0;
+}
+#footer #nav_recipes:hover, #footer #nav_recipes.on  {
+  background: transparent url(/images/irecipes-on.png) no-repeat 50% 0;
+}
+#search {
+  text-align: center;
+  padding: 5px 0;
+  border-top: 1px solid #AAA;
+}
+#search input {
+  -webkit-border-radius: 14px;
+  -webkit-text-size-adjust: 130%;
+  /*-webkit-appearance: searchfield;*/
+  -webkit-box-sizing: border-box;
+  -webkit-user-select: text;
+  background-color: white;
+  border: 1px inset #a12527;
+  cursor: auto;
+  width: 96%;
+  padding: 6px 10px;
+}
+#recipes {
+  list-style:none;
+  padding: 0;
+  }
+#recipes li {
+  clear:left;
+  margin: 0;
+  padding: 0;
+  }
+#recipes .photo {
+  float: left;
+  width: 100px;
+  display: inline;
+  margin-right: 10px;
+  }
+#recipes .c {
+  display: inline;
+  padding-bottom: 5px;
+  }
+#recipes .recipe_title {
+  font-weight: bold;
+  font-size: 14px;
+  padding-top: 5px;
+  padding-right: 15px;
+  }  
+#recipes .created_at {
+  color: #666;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 5px;
+  }
+#recipes .created_at a {
+  color: #666;
+  }
+
+#recipes .rating span {
+  font-weight: bold;
+  color: #666;
+  font-size: 80%;
+  margin-left: 6px;
+  float: left;
+  padding-top:3px;
+  }
+#recipes .rating a {
+  width: 19px;
+  height: 19px;
+  padding: 0;
+  display:block;
+  float: left;
+  margin-right: 1px;
+  background-image: url('/images/star-sm-off.png');  
+  background-repeat: no-repeat;
+  }
+#recipes .rating .on {
+  background-image: url('/images/star-sm-on.png');  
+  background-repeat: no-repeat;
+  }
+
+#content ul li a {
+  font-size: 100%;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 15px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+#content ul li.title {
+  font-weight: bold;
+  color: #7a7d82;
+  text-shadow: 0 1px -1px #FFF;
+  text-align: center;
+  font-size: 90%;
+  padding: 3px 4px;
+  height: 16px;
+  background-color: #d1d3d8;
+  border-top: 1px solid #e9ebef;
+  border-bottom: 1px solid #a3a6a9;
+}
+#content ul li a.checklist {
+  padding-left: 40px;
+  background: transparent url(/images/check_off.png) no-repeat 12px 50%;
+  }
+#content ul li a.checked {
+  padding-left: 40px;
+  color: #BBB;
+  text-decoration: line-through;
+  background: transparent url(/images/iphone-checked.png) no-repeat 12px 50%;
+  }
+#content ul li a.loading {
+  padding-left: 40px;
+  background: transparent url(/images/loader.gif) no-repeat 12px 50%;
+  }
+#content ul li a[selected], #content ul li dd a:active {
+  background-color: #FFF !important;
+  }
+
+h2 {
+  margin-bottom: 20px;
+}  
+#login {
+  padding: 20px;
+}
+#login_form input {
+  width: 90%;
+  border: 1px solid #CCC;
+  padding: 5px;
+  font-size: 1.2em;
+  background-color: #FFF;
+  
+}
+#login_form dd {
+  margin-bottom: 20px;
+}
+
+
+.fresh-o-matic {
+  top: 7px;
+  left: 7px;
+  position: absolute;
+  width:33px;
+  height:33px;
+  overflow:hidden;
+  background: transparent url(/images/fresh-o-matic.png) no-repeat;
+}
+._1 {
+  background-position: 0 0;
+}
+._2 {
+  background-position: -33px 0;
+}
+._3 {
+  background-position: -66px 0;
+}
+._4 {
+  background-position: -99px 0;
+}
+._5 {
+  background-position: -132px 0;
+}
+._6 {
+  background-position: -165px 0;
+}

@@ -1,0 +1,9 @@
+<% form_remote_for :pantry_ingredient, PantryIngredient.new,
+    :url => user_pantry_ingredients_path(@user),
+    :method => :post,
+    :html => {:id => "ingredient-picker-form"} do |f| %>
+  <div id="ingredient-picker" style="display: none;">
+    <%= f.select :ingredient_id, @available_ingredients.map {|e| [e.name, e.id]} %>
+    <button style="margin-left: 4px;">Add it!</button>
+  </div>
+<% end %>

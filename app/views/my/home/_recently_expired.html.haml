@@ -1,0 +1,16 @@
+- pantry_ingredient = recently_expired
+- ingredient = pantry_ingredient.ingredient
+- # If an ingredient is removed and a pantry_ingredient is still around
+- if ingredient.nil?
+  - pantry_ingredient.destroy
+  - return
+
+%div{:id => dom_id(ingredient), :class=>"cell clearfix"}
+
+  %p.photo
+    = link_to image_tag(ingredient.photo_path(:small)), ingredient
+
+  %p.title{:style => "padding-bottom: 5px"}
+    = link_to "<strong>#{ingredient.name}</strong>", ingredient
+  .fresh-o-matic_container.clearfix
+    = freshomatic(pantry_ingredient)

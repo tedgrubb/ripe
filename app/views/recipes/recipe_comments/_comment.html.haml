@@ -1,0 +1,10 @@
+-comment ||= comment
+-user = User.find_by_id(comment.user_id)
+%li.clearfix.pod{:id => dom_id(comment)}
+  .pad_a
+    .pad_b.clearfix
+      = image_tag user.photo_path(:small), :class => "comment_photo"
+      %div.comment_box
+        = link_to_remote '<small>Delete your comment</small>', :url => recipe_comment_path(@recipe, comment), :method => :delete, :confirm => "Delete it forever and ever?", :html => {:style => "float: right;font-size:90%"} if current_user && current_user.can_edit_comment(comment)
+        %p.title== <strong>#{user.name} said...</strong> <em>#{link_to "#{time_ago_in_words(comment.created_at)} ago", permalink(@recipe, comment), :title => comment.created_at.to_json}.</em>
+        %div.comment= markdown(comment.comment)

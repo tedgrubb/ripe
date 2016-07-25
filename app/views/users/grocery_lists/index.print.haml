@@ -1,0 +1,15 @@
+- unless @grocery_list_ingredients.empty?
+  #grocery_list
+    - @grocery_list_categories.each do |category, ingredients|
+      .group
+        %h2= h category.name 
+        - ingredients.each do |ingredient|
+          .row
+            .check
+            .underline= ingredient.name
+        .row
+          .check
+          .underline== &nbsp;
+        .row
+          .check
+          .underline== &nbsp;

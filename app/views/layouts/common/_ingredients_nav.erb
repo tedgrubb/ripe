@@ -1,0 +1,9 @@
+<div class="content-head clearfix">
+  <%# link_to image_tag("/images/add-new-ingredient.png"), new_ingredient_path, :class => "add" %>
+  <h1><%= link_to_unless !@category, "Ingredients", ingredients_path %><%= " / #{h @category.name}" if @category %></h1>
+  <dl class="sort">
+    <dt>Sort by:</dt>
+    <%= sort_item "Common", :popular %>
+    <%= sort_item "Name", :name %>
+  </dl>
+</div>

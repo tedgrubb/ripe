@@ -1,0 +1,5 @@
+page << "$('recipes').hide();"
+page.replace_html 'recipes', :partial => "/my/recommendations/list", :object => @suggested_recipes
+page << "updateTabs('.all')"
+page << "$('recipe-title').update('All suggested recipes')"
+page << "window.location.hash = '#all'"

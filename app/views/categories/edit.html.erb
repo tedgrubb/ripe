@@ -1,0 +1,24 @@
+<h1>Editing category</h1>
+
+<%= error_messages_for :category %>
+
+<% form_for(@category) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+  <br />
+  <p>
+    <b>Keep time</b> (in days)<br />
+    <%= f.text_field :keep_time %>
+  </p>
+
+  <br />
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+  <br />
+<% end %>
+
+<%= link_to 'Show', @category %> |
+<%= link_to 'Back', categories_path %>

@@ -1,0 +1,2 @@
+page[dom_id(@ingredient, "grocery_link")].addClassName('check')
+page[dom_id(@ingredient, "grocery_link")].update("Added to #{link_to 'your grocery list', my_groceries_path}!")

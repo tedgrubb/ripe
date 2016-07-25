@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;" />
+    <title><%= @page_title -%></title>
+    <%= stylesheet_link_tag 'iphone' %>
+    <%= javascript_include_tag 'prototype' %>
+    <%= javascript_include_tag 'iphone' %>
+</head>
+<body>
+  <div id="header">
+    <h1><%= @iphone_title %></h1>
+    <% if @user_nav == :groceries || @user_nav == :recipes || @user_nav == :pantry %>
+      <!-- <div id="search">
+        <input "search" autocorrect="on" autocapitalize="off" placeholder="Search" >
+      </div> -->
+    <% end %>
+  </div>
+  <div id="container">
+    <%= yield %>
+  </div>
+  <div id="footer">
+    <ul>
+      <li><%= link_to "", my_groceries_path, :id => "nav_grocery", :class => "#{'on' if @user_nav == :groceries}" %></li>
+      <li><%= link_to "", my_pantry_path, :id => "nav_pantry", :class => "#{'on' if @user_nav == :pantry}" %></li>
+      <li><%= link_to "", my_recipes_path, :id => "nav_recipes", :class => "#{'on' if @user_nav == :recipes}" %></li>
+    </ul>
+  </div>
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+  var pageTracker = _gat._getTracker("UA-2966187-6");
+  pageTracker._trackPageview();
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+#user-form
+  %p{:style=>"float:right;color:#666;padding-top:7px"}
+    Or,
+    = link_to "Sign up", signup_path
+
+  %h1 Log In
+
+  - if flash[:error]
+    %div.errorExplanation
+      %h2= flash[:error]
+
+  = partial "form"

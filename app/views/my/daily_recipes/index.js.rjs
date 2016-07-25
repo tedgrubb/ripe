@@ -1,0 +1,9 @@
+page << "$('recipes').hide();"
+if @daily_recipes && @daily_recipes.any?
+  page.replace_html 'recipes', :partial => "/my/daily_recipes/list", :object => @daily_recipes
+else
+  page.replace_html 'recipes', "<div class=\"error\">There was a problem loading your daily recipes. #{report_to_gsfn}</div>"
+end
+page << "updateTabs('.today')"
+page << "$('recipe-title').update('Recipe ideas for #{Time.now.strftime("%A, %B #{Time.now.day}#{Time.now.day_ordinal_suffix}")}')"
+page << "window.location.hash = '#today'"

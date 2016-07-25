@@ -1,0 +1,14 @@
+.catalog_head
+  %h1 Kitchen Tools
+
+.catalog.grid
+  %ul
+    - @kitchen_tools.each_with_index do |tool, i|
+      %li.cell{:class => "#{'last' if (i+1)%5 == 0}#{' checked' if rand(3) == 0}"}
+        .inset
+          .img= link_to image_tag(tool.photo_path(:medium)), tool
+          %h4= link_to tool.name, tool
+          = link_to_function "I've got it", "", :class => "got-it-button"
+          = link_to_function "Buy now", "", :class => "buy-now-button"
+        .shadow
+  = will_paginate @ingredients

@@ -1,0 +1,25 @@
+defaults: &defaults
+  port: 8982
+  url: http://localhost:8982/solr
+  heap_size: 24M
+  heap_max: 32M
+  
+development:
+  <<: *defaults
+  
+cached_dev:
+  <<: *defaults
+  
+staging:
+  <<: *defaults
+  
+  
+test:
+  <<: *defaults
+  port: 8984
+  url: http://localhost:8982/solr
+
+production:  
+  <<: *defaults
+  port: 8983
+  url: http://localhost:8983/solr

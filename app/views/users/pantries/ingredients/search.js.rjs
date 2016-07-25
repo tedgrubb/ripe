@@ -1,0 +1,1 @@
+page.replace "results", :partial => "live_results", :object => @results

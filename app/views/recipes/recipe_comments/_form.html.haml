@@ -1,0 +1,14 @@
+-if current_user
+  -form_remote_tag :url => recipe_comments_path(@recipe), :condition => "!$F('comment_input').blank()", :html => {:id => "comment_form"} do
+    =label_tag :comment_input, "What did you think of this recipe?"
+    =text_area_tag :comment, "", :id => "comment_input", :rows => "3", :cols => "74", :style => "font-size:1.1em", :onfocus => "this.setAttribute('rows', '10')", :onblur => "if($F(this).blank())this.setAttribute('rows', '3')"
+    =submit_tag "Post your comment"
+-else
+  .pod
+    .pad_a
+      .pad_b.clearfix
+        =link_to "Log in", new_session_path
+        Or
+        =link_to "Sign up", new_user_path
+        to post a comment.
+  

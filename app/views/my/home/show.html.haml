@@ -1,0 +1,265 @@
+.sidebar
+  = partial "recommendation_strength"
+  = partial "users/grocery_lists/sidebar"
+  = partial "ripe_ingredients"
+  = partial 'invites/form'
+
+.main
+  #dashboard-header.clearfix
+    .catalog_search
+
+      %ul.notify-box
+        - if @expired_ingredients.any?
+          %li.expired.first
+            = image_tag "sprite-pixel.png"
+            You have
+            %strong= link_to_function pluralize(@expired_ingredients.length, "expired ingredient"), "$('expired-ingredients').toggle();"
+
+        -# %li.friends 
+        -#   = image_tag "sprite-pixel.png"
+        -#   You have
+        -#   %strong= link_to_function pluralize(@friend_requests.length, "new friend request"), "$('friend-requests').toggle();"
+
+      = image_tag @user.photo_path(:small)
+
+      %h1= "Hi #{@user.name}!"
+      
+    .catalog-search-shadow
+
+  - if @expired_ingredients.any?
+    #expired-ingredients.notification-box{hidden}
+      %h3 What should we do with these ingredients?
+      #pantry-ingredients.catalog
+        = render :partial => "recently_expired", :collection => @expired_ingredients
+
+  - if @friend_requests.any?
+    #friend-requests.catalog.notification-box{hidden}
+      %h3 These people want to be your friends
+      %ul
+        - @friend_requests.each do |user|
+          %li.cell.clearfix
+            .actions
+              = link_to_function "Accept", :class => "accept-button"
+              = link_to_function "Ignore", :class => "ignore"
+            .photo
+              = link_to image_tag(user.photo_path(:small)), user
+            %p.title{:style=>"padding-bottom:5px"}= link_to "<strong>#{user.name}</strong>", user
+            %div{:style => "color:#666"}
+              - if user.pantry
+                %small.ingredients= pluralize user.pantry.ingredients.length, "ingredient"
+                %br
+              %small.recipes= pluralize user.recipes.length, "recipe"
+    
+  .group
+    .content-head.clearfix
+      %h2#recipe-title
+      %ul#recipe-tabs.tabs
+        %li.today= link_to_remote "Today", :url => my_daily_recipes_path, :method => :get, :before => "loadScreen()"
+        %li.favorites= link_to_remote "Favorites", :url => my_favorites_path, :method => :get, :before => "loadScreen()"
+        %li.all= link_to_remote "All", :url => my_recommendations_path, :method => :get, :before => "loadScreen()"
+          
+    .recipes
+      #loading-screen
+        %div
+      #recipes
+
+- content_for "css" do
+  :plain
+    #ripe_ingredients li {
+      float: left;
+      margin: 0 10px 5px 0
+    }
+    #recommendation-strength {
+      border: 1px solid #DDD;
+      padding: 12px 8px;
+      background-color: #f9f9f9;
+      margin-bottom: 20px;
+      }
+    #recommend_meter {
+      height: 29px;
+      background: transparent url(/images/strength-bar.png) no-repeat;
+      }
+      #recommendation-strength .recommendation-help {
+        margin-top: 10px;
+        }
+        #recommendation-strength h4 {
+          margin-bottom: 5px;
+          font-weight: bold;
+          }
+        #recommendation-strength ol {
+          font-size: 90%;
+          margin-left: 20px;
+          line-height: 18px;
+          }
+      #recommend_meter div {
+        background: transparent url(/images/score-overlay.png) repeat-x;
+        border-radius: 5px 0 0 5px;
+        -moz-border-radius: 5px 0 0 5px;
+        -webkit-border-radius: 5px 0 0 5px;
+        height: 28px;
+      }
+      #recommend_meter .low {
+        background-color: #ff0000;
+        width: 20px;
+        }
+      #recommend_meter .medium-low {
+        background-color: #ff9900;
+        width: 100px;
+        }
+      #recommend_meter .medium-high {
+        background-color: #ffd800;
+        width: 180px;
+        }
+        #recommend_meter .high {
+          background-color: #009900;
+          border-radius: 5px;
+          -moz-border-radius: 5px;
+          -webkit-border-radius: 5px;
+          
+          width: 100%;
+          }
+    .notify-box {
+      float: right;
+      margin-left: 20px;
+      background-color: #FFF;
+      border: 2px solid #CCC;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      }
+      .notify-box li {
+        padding: 4px 8px;
+        border-top: 1px solid #DDD;
+      }
+      .notify-box li.first {
+        border-top: none;
+      }
+      .notify-box img {
+        width: 16px;
+        height: 16px;
+        overflow: hidden;
+        margin-right: 6px !important;      
+      }
+      .notify-box .friends img {
+          background: transparent url(/images/notification-icons.png) no-repeat -16px 0;
+        }
+      .notify-box .expired img {
+          background: transparent url(/images/notification-icons.png) no-repeat;
+        }
+        .notify-box .expired a {
+          color: red;
+          }
+          .notify-box .expired a:hover {
+            color: #000;
+            }
+    .group {
+      margin-bottom: 30px;
+    }
+    .content-head {
+      border-bottom: 1px solid #DDD;
+    }
+    .content-head h2 {
+      float: left;
+      font-family: Georgia;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      font-size: 1.5em;
+      padding-top: 5px;
+      margin-bottom: 6px;
+    }
+    #dashboard-header {
+      padding-bottom: 1px;
+      margin-bottom: 20px;
+      }
+    #dashboard-header h1 {
+      font-size: 2.4em;
+      line-height: 55px;
+      margin-bottom: 0;
+    }
+    #dashboard-header img {
+      float: left; 
+      margin-right: 15px;
+    }
+    .recipes {
+      position: relative;
+    }
+    .recipes .error {
+      text-align: center;
+      padding: 100px 0;
+    }
+    #loading-screen {
+      color: #FFF;
+      z-index: 10;
+      top: 80px;
+      left: 270px;
+      width: 121px;
+      height: 51px;
+      position: absolute;
+      background: transparent url(/images/load-cloud.png) no-repeat;
+      }
+      #loading-screen div {
+        position: absolute;
+        top: 16px;
+        left: 17px;
+        width: 16px;
+        height: 16px;
+        background: transparent url(/images/spinner-454545.gif) no-repeat;
+        }
+    .notification-box {    
+      margin-top: -40px;
+      border: 1px solid #DDD;
+      padding: 15px 15px 0;
+      margin-bottom: 20px;
+      background-color: #FFF;
+      }
+      .notification-box h3 {
+        margin-bottom: 0;
+        }
+      .notification-box .actions {
+        width: 140px !important;
+      }
+      .notification-box a.ignore {
+        float: left;
+        margin-left: 15px;
+        line-height: 24px;
+        }
+      .notification-box a.accept-button {
+        width: 77px;
+        height: 26px;
+        float: left;
+        overflow: hidden;
+        text-indent: -100000px;
+        background: transparent url(/images/accept-button.png) no-repeat 0 0;
+        }
+        .notification-box a.accept-button:hover {
+          background-position: 0 -26px;
+          }
+- content_for "head" do
+  = stylesheet_link_tag 'my_home', :media => "all"
+  
+- content_for "js" do
+  :plain
+    loadScreen = function() {
+      $('recipes').fade({to:0.2, duration: 0.5});
+      $('loading-screen').show();
+    }
+    updateTabs = function(selector) {
+      finishLoad();
+      $$('#recipe-tabs li').invoke("removeClassName", "on");
+      $('recipe-tabs').down(selector).addClassName("on");
+      $('recipes').blindDown({duration: 0.5});
+    }
+    finishLoad = function() {
+      $('loading-screen').hide();
+      $('recipes').appear({duration: 0.6});
+    }
+    document.observe("dom:loaded", function() {
+      var anchor = window.location.hash.gsub('#', '');
+      if(anchor == 'all') {
+        #{remote_function :url => my_recommendations_path, :method => :get, :before => "loadScreen()"}
+      } else if(anchor == 'favorites') {
+        #{remote_function :url => my_favorites_path, :method => :get, :before => "loadScreen()"}
+      } else {
+        #{remote_function :url => my_daily_recipes_path, :method => :get, :before => "loadScreen()"}
+      }
+    });

@@ -1,0 +1,128 @@
+<div class="sidebar">
+  <p class="photo">
+  <% if @ingredient.photo %>
+    <%= image_tag @ingredient.photo_path(:large) %>
+  <% else %>
+    <%- if current_user && current_user.id == 5 -%>
+      <%= link_to_function "Add a photo", 'add_photo()' %>
+      <% form_for(@ingredient, :html => {:multipart => true, :id => "photo_upload", :style => "display:none"}) do |f| %>
+        <div><label>Photo</label><br />
+        <%= f.file_field :uploaded_data, :size => 10 %></div>
+        <div>
+          <%= f.submit "Save" %>
+        </div>
+      <% end %>
+    <%- end -%>
+  <% end %>
+  </p><br />
+
+  <%= link_to 'Edit', edit_ingredient_path(@ingredient) if current_user && current_user.is_admin? %>
+  <%= link_to 'Destroy', @ingredient, :confirm => 'Are you sure?', :method => :delete if current_user && current_user.is_admin? %>
+
+</div>
+
+<div class="main">
+
+  <%- if current_user -%>
+  <div class="actions" style="float:right">
+    <div id="<%= dom_id(@ingredient, "pantry_link") %>">
+      <%= link_to_remote  "Add to your pantry", 
+                          :url => user_pantry_ingredients_path(current_user, :pantry_ingredient => {:ingredient_id => @ingredient.id}), 
+                          :method => :post,
+                          :html => {:class => "add-pantry"} %>
+    </div>                    
+    <div id="<%= dom_id(@ingredient, "grocery_link") %>">
+      <%= link_to_remote  "Add to your grocery list", 
+                          :url => user_grocery_list_ingredients_path(current_user, current_user.grocery_list), 
+                          :method => :post,
+                          :with => "'grocery_list_ingredient[ingredient_id]='+#{@ingredient.id}",
+                          :html => {:class => "add-grocery"} %>
+    </div>
+    </div>
+  <%- end -%>
+  
+
+  
+  <h1 id="ingredient_title" title="Edit ingredient name">
+    <%=h @ingredient.name %>
+  </h1>
+  
+  <p class="categories">
+    <b>In:</b>
+    <%= @categories.map {|cat| link_to cat.name, cat }.to_sentence %>
+  </p><br />
+  
+  <%- unless @ingredient.description.blank? -%>
+  <p class="description">
+    <b>Description:</b><br />
+    <%=h @ingredient.description %>
+  </p>  
+  <%- end -%>
+  
+  <%- unless @recipes.empty? -%>
+  <div class="catalog">
+    <ul class="recipes">
+      <%= render :partial => "recipes/li", :collection => @recipes %>
+    </ul>
+  </div>
+  <%- end -%>
+</div>
+
+<% content_for :js do %>
+  <% inline_template = partial "inline_form" %>
+  var inline_template = <%= inline_template.to_json %>
+  <%- if current_user && current_user.id == 5 -%> 
+  document.observe("dom:loaded", function() {
+    $("ingredient_title").observe("click", function() {
+      this.insert({before: inline_template});
+      $('ingredient_name').focus();
+      $('ingredient_name').select();
+      $$(".edit_ingredient .cancel").first().onclick = function() {
+        this.up("form").remove();
+        $("ingredient_title").show()
+        return false;
+      }
+      this.hide();
+    });
+  });
+  <%- end -%>
+  add_photo = function() {
+    $('photo_upload').toggle();
+  }
+<% end %>
+
+<% content_for :css do %>
+  .main {
+    float: left;
+  }
+  #ingredient_title:hover {
+    display:block;
+    background-color: #FFFFCC;
+  }
+  #ingredient_name {
+    font-size: 1.6em;
+    font-weight: bold;
+    padding: 2px;
+    margin-bottom: 6px;
+  }
+  .edit_ingredient {
+    margin-bottom: 1em;
+  }
+  .categories {
+    color: #666;
+  }
+  .actions {
+    font-size: 90%;
+    margin-bottom: 20px;
+    }
+    .actions div {
+      padding-left: 4px;
+      padding-bottom: 4px;
+      margin-bottom: 3px;
+      border-bottom: 1px solid #DDD;
+    }
+    .actions .check {
+      padding-left: 20px;
+      background: transparent url(/images/check.png) no-repeat 0 1px;
+      }
+<% end %>

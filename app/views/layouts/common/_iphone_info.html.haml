@@ -1,0 +1,10 @@
+%h2 
+  = link_to_function "Get it on your iPhone!", "$('iphone_callout').toggle()"
+#iphone_callout.pod.clearfix{:style => "display:none; padding: 10px"}
+  = link_to image_tag("iphone_info.png"), "http://iphone.itsripe.com", :target => "_blank", :style => "float:left;margin-right: 10px"
+  %ul.styled{:style => "padding-top: 10px"}
+    %li{:style => "margin-bottom: 5px"}== Go to #{link_to 'iphone.itsripe.com', "http://iphone.itsripe.com", :target => "_blank"} on your iPhone's web browser. 
+    %li Bookmark the page and add it to your home screen.
+  %div{:style => "padding-top:5px;color:#666;font-style:italic"}
+    %small 
+      We're working hard to get a native iPhone app that you'll be able to download from the app store on iTunes.

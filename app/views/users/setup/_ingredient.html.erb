@@ -1,0 +1,27 @@
+<%- ingredient ||= ingredient -%>
+<%- first = ingredient_counter == 0 -%>
+<div id="<%= dom_id(ingredient) %>" class="cell clearfix<%= " first" if first %>">
+  
+  <%- if current_user -%>
+    <%- in_pantry = current_user.in_pantry(ingredient) -%>
+    <%- in_list = current_user.in_grocery_list(ingredient) -%>
+    <div class="actions">
+      <div id="<%= dom_id(ingredient, "pantry_link") %>" <%= "class=\"check\"" if in_pantry %>>
+        <%- if in_pantry -%>
+          You already have this
+        <%- else -%>
+        <%= link_to_remote  "Yes", 
+                            :url => user_pantry_ingredients_path(current_user, :pantry_ingredient => {:ingredient_id => ingredient.id}), 
+                            :method => :post,
+                            :html => {:class => "add-pantry"} %>
+        <%= link_to_function "No", "$('#{dom_id(ingredient)}').fade({duration:0.5})", :class => "no-link" %>
+        <%- end -%>
+      </div>
+    </div>
+    
+  <%- end -%>
+  
+  <div class="photo"><%= link_to image_tag(ingredient.photo_path(:small)), ingredient %></div>
+  <p class="title"><%= link_to "<strong>#{ingredient.name}</strong>", ingredient %></p>
+  <%= ingredient_category_list(ingredient) %>
+</div>

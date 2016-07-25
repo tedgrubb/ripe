@@ -1,0 +1,2 @@
+email_form = render :partial => 'recipes/email/new', :object => @recipe
+page << "fb = new Facebox(#{email_form.to_json})"

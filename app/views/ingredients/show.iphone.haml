@@ -1,0 +1,5 @@
+#content
+  - if @recipes.any?
+    %ul#recipes{:title=>"Recipe List", :selected=>"true"}
+      = render :partial => "/my/recipes/li", :collection => @recipes
+  

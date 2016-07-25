@@ -1,0 +1,11 @@
+.sidebar
+  
+.main
+  %h1 My Recipes
+  
+  - if @recipes.any?
+    %ul.recipes
+      = render :partial => "recipes/li", :collection => @recipes
+    = will_paginate @recipes, :order => params[:order]
+  - else
+    %p No recipes added yet.

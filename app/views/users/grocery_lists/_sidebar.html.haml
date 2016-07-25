@@ -1,0 +1,11 @@
+.sb-box
+  %h2 Saved grocery lists
+  #grocery-lists.clearfix
+    %ul
+      - @user.grocery_lists.each do |list|
+        %li{:class => "#{'on' if @grocery_list == list}"}
+          = link_to list.name || "Untitled list ##{list.id}", user_grocery_list_path(@user, list)
+          - if list.primary?(@user)
+            %span (primary)
+    - form_for([@user, GroceryList.new]) do |f|
+      = link_to_function "Start a new list", "$(this).up('form').submit()", :title => "Start a new grocery list", :class => "ui-button grocery-list-button"

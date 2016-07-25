@@ -1,0 +1,9 @@
+#beta_welcome
+  %p== <strong>Welcome to the itsripe.com beta!</strong> We're a small startup in San Francisco with one goal: 
+  .content
+    %p{:style => "font-size: 1.1em;color: #FFF"} 
+      We help you find recipes you can make with the ingredients you've got. 
+      = link_to "Sign up", new_user_path
+      
+:javascript
+  Cookie.set('beta_welcome', 1, 100000)

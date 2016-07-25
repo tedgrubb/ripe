@@ -1,0 +1,2 @@
+page[@ingredient].visual_effect :fade, :duration => "0.5"
+

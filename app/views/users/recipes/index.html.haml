@@ -1,0 +1,13 @@
+.sidebar
+  = partial 'users/sidebar_nav'
+
+.main
+  = partial "header"
+  - if @recipes.any?
+    %ul.recipes
+      = render :partial => "recipes/li", :collection => @recipes
+    = will_paginate @recipes, :order => params[:order]
+  - else
+    %p No recipes added yet.
+-content_for :meta do
+  = auto_discovery_link_tag(:rss, formatted_user_recipes_path(@user, :rss))

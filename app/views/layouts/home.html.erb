@@ -1,0 +1,7 @@
+<% partial 'layouts/default' do %>  
+  <% title(@html_title) %>
+  <%- content_for :meta do -%>
+    <meta name="description" content="Stop wasting! It's Ripe helps you better use the ingredient you've got." />
+  <%- end -%>
+  <%= yield %>
+<% end %>

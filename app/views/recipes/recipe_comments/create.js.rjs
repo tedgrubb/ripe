@@ -1,0 +1,3 @@
+page.insert_html :bottom, 'comments', :partial => "/recipes/recipe_comments/comment", :object => @comment
+page['comment_input'].value = ""
+page['comment_input'].setAttribute("rows", "3")

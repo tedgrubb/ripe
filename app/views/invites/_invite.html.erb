@@ -1,0 +1,8 @@
+<% existing = User.find_by_email(invite.email) %>
+<dd>
+  <% if existing %>
+    <%= existing.email %> (<%= link_to "#{existing.login}", user_path(existing) %>)
+  <% else %>
+  <%= invite.email %>
+  <% end %>
+</dd>

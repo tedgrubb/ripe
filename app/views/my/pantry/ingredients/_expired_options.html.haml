@@ -1,0 +1,8 @@
+%span.first{:id => dom_id(ingredient, "pantry_link")}
+  = link_to_remote  "Refill", :url => user_pantry_ingredients_path(current_user, :pantry_ingredient => {:ingredient_id => ingredient.id}), :method => :post, :html => {:class => "add-pantry"}
+
+%span{:id => dom_id(ingredient, "grocery_link")}
+  = link_to_remote  "Add to groceries", :url => user_grocery_list_ingredients_path(current_user, current_user.grocery_list), :method => :post,:with => "'grocery_list_ingredient[ingredient_id]='+#{ingredient.id}",:html => {:class => "add-grocery"}
+
+%span
+  = link_to_remote 'Throw away', :url => user_pantry_ingredient_path(@user, ingredient), :method => :delete

@@ -1,0 +1,12 @@
+- prompted ||= "Type ingredients to add"
+
+%div{:id => dom_id}
+  = image_tag "spinner.gif", :class => "spinner", :style => "position:absolute;top:6px;right:6px;display:none"
+  .text_field
+    = text_field_tag "live_search_input", prompted, :onfocus => "new Prompted(this)", :class => "text"
+  %div{:style => "position:absolute"}
+    %ul#results.results{:style => "display:none;"}
+      %li{hidden}
+
+:javascript
+  $(#{dom_id.to_json}).searcher = new LiveSearch('live_search', #{url})

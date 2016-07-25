@@ -1,0 +1,5 @@
+page.insert_html :bottom, 'ingredients', :partial => "/recipes/insert_ingredient", :object => @ingredient
+page[@ingredient].visual_effect :highlight
+page << "hideLiveSearch()"
+page << "SortableIngredients()"
+page << "$('live_search').searcher.reset()"

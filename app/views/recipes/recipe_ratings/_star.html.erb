@@ -1,0 +1,14 @@
+<%- if current_user -%>
+<%= link_to_remote("", 
+                  :url => recipe_recipe_ratings_path(recipe), 
+                  :with => "'score='+'#{score}'", 
+                  :html => {
+                    :class => "#{"on" if on}",
+                    :onmouseover => "over_rating(this, #{score})"
+                  }) %>
+<%- else -%>
+<%= link_to_function("", "",
+                    :class => "#{"on" if on}",
+                    :style => "cursor: default"
+                    ) %>
+<%- end -%>

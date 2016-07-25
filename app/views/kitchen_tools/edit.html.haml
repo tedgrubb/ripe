@@ -1,0 +1,10 @@
+- form_for @kitchen_tool, :html => {:multipart => true} do |f|
+  .row
+    = f.label :name
+    = f.text_field :name
+    <div class="row">
+  .row
+    = f.label :uploaded_data, "Photo"
+    = f.file_field :uploaded_data, :size => "20"
+  .row
+    = f.submit "Save"

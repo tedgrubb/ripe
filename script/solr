@@ -1,0 +1,85 @@
+#!/usr/bin/env ruby
+RAILS_ENV = ENV['RAILS_ENV'] || 'development'
+require File.dirname(__FILE__) + '/../config/boot'
+require File.dirname(__FILE__) + '/../vendor/daemonize'
+require 'yaml'
+require 'fileutils'
+
+include Daemonize
+
+root = File.expand_path(RAILS_ROOT)
+config = YAML::load_file(RAILS_ROOT+'/config/solr.yml')[RAILS_ENV]
+
+JAVA_OPTIONS= [
+  "-server",
+  "-Djetty.home=#{Rails.root}/vendor/solr",
+  "-Dsolr.solr.home=#{Rails.root}/vendor/solr/solr",
+  "-Djetty.port=#{config['port']}",
+  "-DSTART=#{Rails.root}/config/solr/#{Rails.env}/solr.config",
+]
+
+JAVA_OPTIONS.unshift("-Xms#{config["heap_size"]}") unless config["heap_size"].empty?
+JAVA_OPTIONS.unshift("-Xmx#{config["heap_max"]}") unless config["heap_max"].empty?
+
+RUN_CMD="java #{JAVA_OPTIONS.join(' ')} -jar #{Rails.root}/vendor/solr/start.jar"
+
+def usage
+  puts "Usage: #{$0} {start|stop|restart}"
+  exit 1
+end
+
+def pid_file
+  "#{Rails.root}/tmp/pids/solr.#{Rails.env}.pid"
+end
+
+def write_pid(pid)
+  FileUtils.mkdir_p(File.dirname(pid_file))
+  File.open(pid_file, 'w'){|f| f.puts pid}
+end
+
+def read_pid
+  return nil unless File.exists?(pid_file)
+  IO.read(pid_file).strip
+end
+
+case (ARGV.first || 'nada').to_sym
+when :exec
+  Dir.chdir(RAILS_ROOT)
+  exec(RUN_CMD)
+when :start
+  print "Starting SOLR: "
+  if File.exists?(pid_file)
+    puts "Already running"
+    exit 1
+  end
+
+  pid = call_as_daemon Proc.new{
+    Signal.trap("HUP") {  }
+    Dir.chdir(RAILS_ROOT)
+    exec(RUN_CMD)
+  }, "#{root}/log/solr.#{RAILS_ENV}.log"
+
+  write_pid pid
+  puts "started on #{pid}"
+
+when :stop
+  print "Stopping SOLR: "
+
+  unless pid = read_pid
+    puts "Not running"
+    exit 1
+  end
+  system("kill #{pid}")
+  sleep 3
+  system("kill -9 #{pid}")
+  File.delete(pid_file)
+  puts "OK!"
+
+when :restart
+  system("#{$0} stop #{$*.join(' ')}")
+  sleep 5
+  system("#{$0} start #{$*.join(' ')}")
+else
+  usage
+end
+exit 0

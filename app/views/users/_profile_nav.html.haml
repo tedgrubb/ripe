@@ -1,0 +1,4 @@
+%ul.tabs
+  %li{:class => "#{'on' if @sub_nav_item == :recipes}"}=link_to "Recipes", user_recipes_path(@user)
+  %li{:class => "#{'on' if @sub_nav_item == :pantry}"}=link_to "Pantry", user_pantry_path(@user)
+  %li{:class => "#{'on' if @sub_nav_item == :grocery_list}"}=link_to "Grocery List", user_grocery_lists_path(@user)

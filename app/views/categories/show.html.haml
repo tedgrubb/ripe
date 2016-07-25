@@ -1,0 +1,16 @@
+.sidebar
+  %h2 Categories
+  .pod
+    = render :partial => 'layouts/common/category_nav'
+  =partial "recipes/ads/adsense_300x250"
+.main
+  = partial '/layouts/common/ingredients_nav'
+  .catalog
+    - unless @ingredients.empty?
+      = render :partial => 'ingredients/ingredient', :collection => @ingredients
+    - else
+      No 
+      = @category.name.downcase 
+      added yet! 
+      = link_to "Add some now", "#{new_ingredient_path}?category=#{@category.name}"
+    = will_paginate @ingredients

@@ -1,0 +1,28 @@
+<ul id="results" class="results">
+<% unless @results.empty? %>
+  <%= render :partial => "result", :collection => @results %>
+  <li style="text-align: center" class="next">
+    <%= link_to_function "<strong>...Last 5 results</strong>", "$('live_search').searcher.run_with_offset(#{@offset-5})" if @offset > 0 %>
+    <%= link_to_function "<strong>Next 5 results...</strong>", "$('live_search').searcher.run_with_offset(#{@offset+5})" %>
+  </li>
+  <li class="no_result">
+    <p>
+      <strong>Can't find it?</strong><br />
+      <small>You can help us out by adding your ingredient to It's Ripe! It's easy!</small>
+    </p>
+  </li>
+  <li class="result">
+    <%= link_to "<strong>+ Add a new ingredient</strong>", new_ingredient_path, :style => "display:block!important" %>
+  </li>
+<% else %>
+  <li class="no_result">
+    <p>
+      <strong>We don't have that ingredient yet.</strong><br />
+      <small>You can help us out by adding <strong>"<%= @query %>"</strong> to It's Ripe! It's easy!</small>
+    </p>
+  </li>
+  <li class="result">
+    <%= link_to "<strong>+ Add a new ingredient</strong>", new_ingredient_path, :style => "display:block!important" %>
+  </li>
+<% end %>
+</ul>

@@ -1,0 +1,12 @@
+- ingredient = recipe_ingredient.ingredient
+- html_class = []
+- if current_user
+  - html_class << "have" if current_user.in_pantry(ingredient)
+  - html_class << "on_list" if current_user.in_grocery_list(ingredient)
+- html_class << "last" if index+1 == @ingredients.length ? true : false
+
+%div{:id => "#{dom_id(ingredient)}", :class => "ingredient hmeasure clearfix #{html_class.join(' ')}"}
+  = ingredient_photo(ingredient, :small)
+  %div{:style => "margin-left:65px"}
+    = link_to("<abbr class=\"item\" title=\"#{ingredient.name}\">#{truncate(ingredient.name, 38)}</abbr>", ingredient, :class => "name")
+    = ingredient_meta(recipe_ingredient, @servings)

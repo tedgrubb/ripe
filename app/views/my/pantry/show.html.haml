@@ -1,0 +1,20 @@
+.sidebar
+  .home_pod
+    = partial 'invites/form' unless @user.invites == 0 || @user.invites == nil
+    
+.main
+  .catalog_search
+    %label Add to your pantry
+    = live_search({:dom_id => "live_search", :url => search_user_pantry_ingredients_path(@user).to_json, :prompted => ""})
+    %p
+      %span.right== Or, #{link_to "Browse all ingredients", ingredients_path}
+      %strong Example:
+      Apples, Carrots, Buckwheat Flour.
+  .catalog-search-shadow
+  
+  - if @ingredients.any?
+    #pantry-ingredients.catalog
+      = render :partial => "users/pantries/ingredient", :collection => @ingredients
+    = will_paginate @ingredients
+  - else
+    %p No ingredients added yet.

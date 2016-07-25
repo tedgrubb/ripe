@@ -1,0 +1,11 @@
+.sidebar
+  
+.main
+  %h1 My Favorite Recipes
+  
+  - if @favorite_recipes.any?
+    %ul.recipes.catalog
+      = render :partial => "recipes/recommendation", :collection => @favorite_recipes
+  - else
+    %p No recipes added yet.
+  

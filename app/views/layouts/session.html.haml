@@ -1,0 +1,5 @@
+- partial 'layouts/default' do
+  - title(@html_title)
+  - content_for :css_link do
+    = stylesheet_link_tag 'session'
+  = yield

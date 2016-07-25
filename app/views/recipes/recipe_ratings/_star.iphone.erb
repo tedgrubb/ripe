@@ -1,0 +1,6 @@
+<%= link_to_remote("", 
+                  :url => recipe_recipe_ratings_path(recipe), 
+                  :with => "'score='+'#{score}'", 
+                  :html => {
+                    :class => "#{"on" if on}"
+                  }) %>

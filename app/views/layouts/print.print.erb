@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <%= yield :meta %>
+  <title><%= yield :title %></title>
+  <%= javascript_include_tag 'prototype' %>
+  <%= javascript_include_tag 'effects' %>
+  <style type="text/css" media="all">
+    body {
+      margin: 0;
+      font: 12px helvetica, arial, sans-serif;
+    }
+    /* slightly enhanced, universal clearfix hack */
+    .clearfix { display: inline-block; }
+    .clearfix:after {
+      visibility: hidden;
+      display: block;
+      content: ".";
+      clear: both;
+      height: 0;
+      }
+    /* start commented backslash hack \*/
+    * html .clearfix { height: 1%; }
+    .clearfix { display: block; }
+    /* close commented backslash hack */
+    
+    h2 {
+      font-size: 14px;
+    }
+    #print_header {
+      border-bottom: 1px dotted #999;
+      padding: 5px 10px;
+    }
+    #print_container {
+      padding: 10px;
+    }
+    #grocery_list img {
+      margin-right: 3px;
+      vertical-align: middle;
+    }
+    #grocery_list {
+      font-size: 90%;
+      width: 260px;
+    }
+    #grocery_list .group {
+      margin-bottom: 20px;
+    }
+    #grocery_list .check {
+      padding: 5px;
+      float: left;
+      border: 1px solid #666;
+      border-right: 1px solid #999;
+      border-bottom: 1px solid #999;
+    }
+    #grocery_list h2 {      
+      color: #222;
+      font-style: italic;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      font-family: georgia;
+    }
+    #grocery_list .row {
+      margin-bottom: 5px;
+      margin-top: 0;
+    }
+    #grocery_list .row img {
+      float: left;
+    }
+    #grocery_list .row .underline {
+      padding: 0 0 2px;
+      border-bottom: 1px solid #666;
+      margin-left: 22px;
+    }
+    .row {
+      margin-bottom: 5px;
+    }
+    <%= yield :css %>
+  </style>
+  
+  <script type="text/javascript" charset="utf-8">
+    <!-- //
+    <%= yield :js %>
+    document.observe("dom:loaded", function() {
+      window.print();
+    });
+    // -->
+  </script>
+</head>
+<body>
+  <div id="print_header">
+    <%= image_tag "logo.png" %>
+  </div>
+  <div id="print_container">
+    <%= yield %>
+  </div>
+</body>
+</html>

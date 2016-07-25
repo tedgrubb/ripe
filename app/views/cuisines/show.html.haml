@@ -1,0 +1,18 @@
+.content-head.clearfix
+  %h1== #{link_to "Recipes", recipes_path} / #{@cuisine.name} Recipes
+  =partial "/recipes/sort"
+
+=partial "/recipes/sidebar"
+=partial "/recipes/list"
+
+-content_for :meta do
+  = auto_discovery_link_tag(:rss, formatted_cuisine_path(@cuisine, :rss))
+  
+-content_for :css do
+  :plain
+    .main {
+      width: 580px;
+    }
+    .sidebar {
+      width: 300px;
+    }

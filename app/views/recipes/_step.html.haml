@@ -1,0 +1,15 @@
+- step_display = step_counter+1
+
+.step.row
+  %label= step_display
+  %textarea.text{:name => "recipe[new_steps][description][]", :rows => "4", :cols => "67"}
+    = step.description if step
+  = link_to_function 'x', "$(this).up('.step').remove()", :title => "Remove", :class => "remove", :style => "float:left"
+  .step_photo
+    %p= image_tag step.photo_path(:full_medium) if step && step.photo
+    %div{:style => "display:none"}
+      %input.file{:type => "file", :name => "recipe[new_steps][uploaded_data][]", :size => "20"}
+      = link_to_function "Remove", "$(this).up('div').hide();$(this).up('div').next().show()"
+    = link_to_function "Add a photo", "$(this).previous().show();$(this).hide()"
+  %div
+    %input.number{:type => "hidden", :name => "recipe[new_steps][number][]", :value => step_counter}

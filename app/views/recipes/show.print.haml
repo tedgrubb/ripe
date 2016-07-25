@@ -1,0 +1,88 @@
+%h1= @recipe.name
+
+#ingredients
+  %h2 INGREDIENTS
+  %ul.clearfix
+    - @ingredients.each do |recipe_ingredient|
+      - i = recipe_ingredient.ingredient
+      - measurement = recipe_ingredient.measurement || ""
+      - quantity = recipe_ingredient.entered_quantity || ""
+      %li== #{quantity} #{measurement} #{i.name}
+    
+#directions
+  %h2 DIRECTIONS
+  -@steps.each do |step|
+    %p= step.description
+
+-content_for :css do
+  :plain
+    h1 {
+      font-size: 1.8em
+    }
+    #ingredients ul {
+      list-style:none;
+      margin: 0;
+      padding: 0;
+    }
+    #ingredients ul li {
+      margin: 0;
+      padding: 0;
+    }
+  - if params[:layout] == "3x5"    
+    :plain
+      #print_header {
+        display:none
+      }
+      #print_container {
+        width: 375px;
+        height: 225px;
+        font-size: 0.8em;
+        padding: 0 5px;
+        border: 2px dashed #DDD;
+      }
+      h1 {
+        font-size: 1.1em
+      }
+      h2 {
+        font-size: 1em
+      }
+      p {
+        margin: 0;
+        margin-bottom: 5px;
+      }
+      #ingredients {
+        margin-bottom: 10px;
+      }
+      #ingredients ul li {
+        float: left;
+        width: 50%;
+      }
+  -elsif params[:layout] == "5x7"
+    :plain
+      #print_header {
+        display:none
+      }
+      #print_container {
+        padding: 0 5px;
+        border: 2px dashed #DDD;
+        width: 525px;
+        height: 375px;
+        font-size: 1em;
+      }
+      h1 {
+        font-size: 1.1em
+      }
+      h2 {
+        font-size: 1em
+      }
+      p {
+        margin: 0;
+        margin-bottom: 5px;
+      }
+      #ingredients {
+        margin-bottom: 10px;
+      }
+      #ingredients ul li {
+        float: left;
+        width: 50%;
+      }

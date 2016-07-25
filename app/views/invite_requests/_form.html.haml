@@ -1,0 +1,5 @@
+- unless @user.invites == 0 || @user.invites == nil
+  .sb-box
+    - form_for @invite_request do |f|
+      = f.text_field :email, :class => "prompted text", :size => 18, :value => "Your Email Address", :onfocus => "new Prompted(this)"
+      = f.submit "Invite Me!", :class => "submit", :onclick => "if($F('invite_request_email') == 'Your Email Address') {$('invite_request_email').setValue('')}"

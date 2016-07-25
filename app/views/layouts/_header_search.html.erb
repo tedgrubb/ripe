@@ -1,0 +1,6 @@
+<% form_tag searches_path, :method => :get, :id => "super-search" do %>
+  <div class="text_field">
+    <input name="query" type="text" class="prompted text" value="Search all recipes" onfocus="new Prompted(this)" />
+    <!-- <input type="submit" class="submit large-orange-button" value="Search" /> -->
+  </div>
+<% end %>

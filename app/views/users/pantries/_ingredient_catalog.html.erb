@@ -1,0 +1,8 @@
+<%- unless @ingredients.empty? -%>
+  <div id="pantry-ingredients" class="catalog">
+    <%= render :partial => "users/pantries/ingredient", :collection => @ingredients %>
+  </div>
+  <%= will_paginate @ingredients %>
+<%- else -%>
+  <p>No ingredients added yet.</p>
+<%- end -%>

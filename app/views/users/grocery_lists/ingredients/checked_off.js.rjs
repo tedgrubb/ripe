@@ -1,0 +1,2 @@
+page[dom_id(@ingredient, "grocery_link")].removeClassName('loading')
+page[dom_id(@ingredient, "grocery_link")].addClassName('checked')

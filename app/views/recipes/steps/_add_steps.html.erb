@@ -1,0 +1,14 @@
+<fieldset id="steps_fs">
+  <div class="balloon">
+    <h2>TIP:</h2>
+    Use as many steps as you like. Tell us what ingredients we need and how long it will take.
+  </div>
+  <div class="inset">
+    <h2>INSTRUCTIONS</h2>
+    <div id="steps_list">
+      <%= render :partial => "step", :collection => @steps %>
+    </div>
+    <div class="step" style="margin-top: 11px;margin-left:1px"><%= link_to_function "Add another step", "add_step()", :id => "add_step" %></div>
+  </div>
+  <div><%= f.hidden_field :user_id, :value => current_user.id %></div>
+</fieldset>

@@ -1,0 +1,37 @@
+%ul#share_links
+  %li
+    = link_to_function "Print <span></span>", "toggleBox($(this).up())", :class => "print toggle"
+    %div
+      %dl
+        %dd= link_to "3x5 Card", formatted_recipe_path(@recipe, :print, :layout => "3x5"), :target => "_blank", :class => "print-3x5", :rel => "nofollow"
+        %dd= link_to "5x7 Card", formatted_recipe_path(@recipe, :print, :layout => "5x7"), :target => "_blank", :class => "print-5x7", :rel => "nofollow"
+        %dd= link_to "Full Page", formatted_recipe_path(@recipe, :print, :layout => "full"), :target => "_blank", :class => "print-full last", :rel => "nofollow"
+  %li
+    = link_to_function "Share <span></span>", "toggleBox($(this).up())", :class => "share toggle"
+    %div
+      %dl
+        %dd= link_to_remote "Email it", :url => new_recipe_email_path(:recipe_id => @recipe), :method => "get", :html => {:class => "mail"}
+        %dd= link_to "Tweet it", new_recipe_twitter_path(:recipe_id => @recipe), :target => "_new", :class => "twitter", :rel => "nofollow"
+        - widget = partial 'recipes/follow/widget'
+        %dd= link_to_function "Blog it", "fb = new Facebox(#{widget.to_json})", :class => "blog last"  
+  
+:javascript
+  function toggleBox(box) {
+    on = $(box).hasClassName('toggled');
+    if(!on) {
+      $(box).addClassName('toggled');
+      document.onmousedown = function(event) {
+        target = event.target || window.event.srcElement;
+        if($(target).outside(box)) {
+          closeAllBoxes();
+          document.onmousedown = null;
+        }
+      }
+    } else {
+      closeAllBoxes();
+      document.onmousedown = null;
+    }
+  }
+  function closeAllBoxes() {
+    $$('.toggled').invoke('removeClassName', 'toggled');
+  }

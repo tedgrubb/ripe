@@ -1,0 +1,18 @@
+.main
+  %h1 Recommendations
+
+  .recipes.catalog
+    - if @suggested_recipes.any?
+      #recipes
+        = render :partial => "recipes/li", :collection => @suggested_recipes
+    - else 
+      .pod
+        .pad_a
+          .pad_b
+            %strong.title Hmm... We couldn't find anything for you to make :(
+            %br
+            %p 
+              We're working hard to find more recipes for you. You can help by letting us know the kinds of food you like to make. 
+              %strong= link_to "Get started now!", user_setup_path(@user)
+            
+    = will_paginate(@suggested_recipes)

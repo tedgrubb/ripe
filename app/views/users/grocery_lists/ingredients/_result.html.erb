@@ -1,0 +1,4 @@
+<% result ||= result %>
+<li class="result">
+  <%= link_to_remote result.name, :url => "#{user_grocery_list_ingredients_path(@user, @grocery_list)}?from_search=1&grocery_list_ingredient[ingredient_id]=#{result.id}" %>
+</li>
